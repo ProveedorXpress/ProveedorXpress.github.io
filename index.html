@@ -1,351 +1,128 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ProveedorXpress</title>
-<style>
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    background: #fff;
-    color: #000;
-  }
-  header {
-    text-align: center;
-    padding: 2rem 1rem 1rem;
-    background: #fff;
-  }
-  header h1 {
-    margin: 0;
-    font-size: 3rem;
-  }
-  header p {
-    font-size: 1.2rem;
-    color: #555;
-    margin-top: 0.3rem;
-  }
-  main {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 2rem 1rem 4rem;
-  }
-  .fila {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-bottom: 2rem;
-    flex-wrap: nowrap;
-  }
-  .producto {
-    flex: 1 1 auto;
-    max-width: 320px;
-    border: 1px solid #eee;
-    border-radius: 10px;
-    padding: 1rem;
-    text-align: center;
-    box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
-    background: #fff;
-    transition: transform 0.3s ease;
-  }
-  .producto:hover {
-    transform: scale(1.05);
-  }
-  .producto img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 10px;
-    transition: transform 0.3s ease;
-  }
-  .producto img:hover {
-    transform: scale(1.1);
-  }
-  .producto h2 {
-    font-size: 1.5rem;
-    margin: 1rem 0 0.5rem;
-    color: #000;
-  }
-  .precio {
-    font-size: 1.3rem;
-    margin-bottom: 1rem;
-    color: #000;
-    font-weight: bold;
-  }
-  button {
-    background-color: #b28800; /* amarillo oscuro */
-    border: none;
-    padding: 0.7rem 1.5rem;
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #000;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  button:hover {
-    background-color: #d1a700;
-  }
-  /* Carrito lateral */
-  #carrito {
-    position: fixed;
-    top: 0;
-    right: -350px;
-    width: 350px;
-    height: 100vh;
-    background: #fff;
-    box-shadow: -3px 0 10px rgba(0,0,0,0.2);
-    padding: 1.5rem;
-    transition: right 0.4s ease;
-    display: flex;
-    flex-direction: column;
-    z-index: 9999;
-  }
-  #carrito.visible {
-    right: 0;
-  }
-  #carrito h3 {
-    margin-top: 0;
-    margin-bottom: 1rem;
-    font-size: 2rem;
-    border-bottom: 2px solid #b28800;
-    padding-bottom: 0.5rem;
-    color: #000;
-  }
-  #carrito .items {
-    flex: 1;
-    overflow-y: auto;
-    margin-bottom: 1rem;
-  }
-  #carrito .item {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 0.5rem;
-    color: #000;
-  }
-  #carrito .item span {
-    font-weight: bold;
-  }
-  #carrito .total {
-    font-weight: bold;
-    font-size: 1.2rem;
-    border-top: 2px solid #b28800;
-    padding-top: 0.7rem;
-    margin-bottom: 1rem;
-    color: #000;
-  }
-  #carrito button#cerrarCarrito {
-    background: #b22222;
-    color: #fff;
-    border: none;
-    padding: 0.6rem 1rem;
-    cursor: pointer;
-    font-size: 1rem;
-    border-radius: 5px;
-    margin-bottom: 0.7rem;
-  }
-  #carrito button#comprar {
-    background-color: #b28800;
-    color: #000;
-    padding: 0.9rem 1rem;
-    font-weight: bold;
-    font-size: 1.2rem;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  #carrito button#comprar:hover {
-    background-color: #d1a700;
-  }
-  #carrito p.instrucciones {
-    font-size: 0.85rem;
-    margin-top: 0.7rem;
-    color: #333;
-  }
-  /* Responsive */
-  @media(max-width: 980px){
-    .fila {
-      flex-wrap: wrap;
-    }
-    .producto {
-      max-width: 48%;
-      margin-bottom: 1.5rem;
-    }
-  }
-  @media(max-width: 600px){
-    .producto {
-      max-width: 100%;
-    }
-    #carrito {
-      width: 100vw;
-      right: -100vw;
-    }
-    #carrito.visible {
-      right: 0;
-    }
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ProveedorXpress</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<header>
-  <h1>ProveedorXpress</h1>
-  <p>Proveedores de calidad</p>
-</header>
+  <header>
+    <h1>ProveedorXpress</h1>
+    <p>Proveedores de calidad</p>
+  </header>
 
-<main>
-  <!-- Fila 1 -->
-  <div class="fila">
-    <article class="producto" data-name="Proveedor de ropa" data-price="10">
+  <main class="productos-grid">
+
+    <div class="producto">
       <img src="img/ropa.jpg" alt="Proveedor de ropa" />
       <h2>Proveedor de ropa</h2>
-      <p class="precio">10€</p>
+      <p class="precio"><span class="precio-original">20€</span><span class="precio-descuento">10€</span></p>
       <button class="btn-agregar">Agregar al carrito</button>
-    </article>
-    <article class="producto" data-name="Proveedor vapers" data-price="10">
-      <img src="img/vapers.jpg" alt="Proveedor vapers" />
+    </div>
+
+    <div class="producto">
+      <img src="img/vapers.jpg" alt="Proveedor de vapers" />
       <h2>Proveedor vapers</h2>
-      <p class="precio">10€</p>
+      <p class="precio"><span class="precio-original">20€</span><span class="precio-descuento">10€</span></p>
       <button class="btn-agregar">Agregar al carrito</button>
-    </article>
-    <article class="producto" data-name="Proveedor zapas" data-price="10">
-      <img src="img/zapas.jpg" alt="Proveedor zapas" />
+    </div>
+
+    <div class="producto">
+      <img src="img/zapas.jpg" alt="Proveedor de zapas" />
       <h2>Proveedor zapas</h2>
-      <p class="precio">10€</p>
+      <p class="precio"><span class="precio-original">20€</span><span class="precio-descuento">10€</span></p>
       <button class="btn-agregar">Agregar al carrito</button>
-    </article>
-  </div>
+    </div>
 
-  <!-- Fila 2 -->
-  <div class="fila">
-    <article class="producto" data-name="Proveedor ropa vintage" data-price="10">
-      <img src="img/ropa_vintage.jpg" alt="Proveedor ropa vintage" />
+    <div class="producto">
+      <img src="img/vintage.jpg" alt="Proveedor de ropa vintage" />
       <h2>Proveedor ropa vintage</h2>
-      <p class="precio">10€</p>
+      <p class="precio"><span class="precio-original">20€</span><span class="precio-descuento">10€</span></p>
       <button class="btn-agregar">Agregar al carrito</button>
-    </article>
-    <article class="producto" data-name="Proveedor Facturas editables" data-price="10">
-      <img src="img/facturas.jpg" alt="Proveedor facturas editables" />
+    </div>
+
+    <div class="producto">
+      <img src="img/facturas.jpg" alt="Proveedor de facturas" />
       <h2>Proveedor Facturas editables</h2>
-      <p class="precio">10€</p>
+      <p class="precio"><span class="precio-original">20€</span><span class="precio-descuento">10€</span></p>
       <button class="btn-agregar">Agregar al carrito</button>
-    </article>
-    <article class="producto" data-name="Proveedor Fútbol" data-price="10">
-      <img src="img/futbol.jpg" alt="Proveedor fútbol" />
+    </div>
+
+    <div class="producto">
+      <img src="img/futbol.jpg" alt="Proveedor de fútbol" />
       <h2>Proveedor Fútbol</h2>
-      <p class="precio">10€</p>
+      <p class="precio"><span class="precio-original">20€</span><span class="precio-descuento">10€</span></p>
       <button class="btn-agregar">Agregar al carrito</button>
-    </article>
-  </div>
+    </div>
 
-  <!-- Fila 3 -->
-  <div class="fila">
-    <article class="producto" data-name="Proveedor Relojes" data-price="10">
-      <img src="img/relojes.jpg" alt="Proveedor relojes" />
+    <div class="producto">
+      <img src="img/relojes.jpg" alt="Proveedor de relojes" />
       <h2>Proveedor Relojes</h2>
-      <p class="precio">10€</p>
+      <p class="precio"><span class="precio-original">20€</span><span class="precio-descuento">10€</span></p>
       <button class="btn-agregar">Agregar al carrito</button>
-    </article>
-    <article class="producto" data-name="Proveedor Accesorios" data-price="10">
-      <img src="img/accesorios.jpg" alt="Proveedor accesorios" />
+    </div>
+
+    <div class="producto">
+      <img src="img/accesorios.jpg" alt="Proveedor de accesorios" />
       <h2>Proveedor Accesorios</h2>
-      <p class="precio">10€</p>
+      <p class="precio"><span class="precio-original">20€</span><span class="precio-descuento">10€</span></p>
       <button class="btn-agregar">Agregar al carrito</button>
-    </article>
-    <article class="producto" data-name="Proveedor papelería" data-price="10">
-      <img src="img/papeleria.jpg" alt="Proveedor papelería" />
-      <h2>Proveedor papelería</h2>
-      <p class="precio">10€</p>
+    </div>
+
+    <div class="producto">
+      <img src="img/electronica.jpg" alt="Proveedor de electrónica" />
+      <h2>Proveedor Electrónica</h2>
+      <p class="precio"><span class="precio-original">20€</span><span class="precio-descuento">10€</span></p>
       <button class="btn-agregar">Agregar al carrito</button>
-    </article>
-  </div>
+    </div>
 
-  <!-- Fila 4 -->
-  <div class="fila">
-    <article class="producto" data-name="Proveedor USB" data-price="10">
-      <img src="img/usb.jpg" alt="Proveedor USB" />
-      <h2>Proveedor USB</h2>
-      <p class="precio">10€</p>
+    <div class="producto">
+      <img src="img/tickets.jpg" alt="Tickets" />
+      <h2>Tickets</h2>
+      <p class="precio"><span class="precio-original">20€</span><span class="precio-descuento">10€</span></p>
       <button class="btn-agregar">Agregar al carrito</button>
-    </article>
-    <article class="producto" data-name="Proveedor Medicamentos" data-price="10">
-      <img src="img/medicamentos.jpg" alt="Proveedor medicamentos" />
-      <h2>Proveedor Medicamentos</h2>
-      <p class="precio">10€</p>
+    </div>
+
+    <div class="producto">
+      <img src="img/perfumes.jpg" alt="Proveedor de perfumes" />
+      <h2>Proveedor Perfumes</h2>
+      <p class="precio"><span class="precio-original">20€</span><span class="precio-descuento">10€</span></p>
       <button class="btn-agregar">Agregar al carrito</button>
-    </article>
-    <article class="producto" data-name="Proveedor Material construcción" data-price="10">
-      <img src="img/material_construccion.jpg" alt="Proveedor material construcción" />
-      <h2>Proveedor Material construcción</h2>
-      <p class="precio">10€</p>
+    </div>
+
+    <div class="producto">
+      <img src="img/pack.jpg" alt="Pack completo" />
+      <h2>Pack Todos los proveedores</h2>
+      <p class="precio"><span class="precio-original">100€</span><span class="precio-descuento">50€</span></p>
       <button class="btn-agregar">Agregar al carrito</button>
-    </article>
-  </div>
-</main>
+    </div>
 
-<!-- Carrito lateral -->
-<aside id="carrito" aria-label="Carrito de compras">
-  <h3>Carrito</h3>
-  <div class="items"></div>
-  <p class="total">Total: 0€</p>
-  <button id="comprar">Comprar con PayPal</button>
-  <button id="cerrarCarrito">Cerrar</button>
-  <p class="instrucciones">
-    Al realizar la compra, por favor deja tu correo en la "Nota al vendedor" de PayPal para contacto.
-  </p>
-</aside>
+    <div class="producto">
+      <img src="img/aleatorios.jpg" alt="Pack aleatorio" />
+      <h2>Pack Aleatorios</h2>
+      <p class="precio"><span class="precio-original">40€</span><span class="precio-descuento">20€</span></p>
+      <button class="btn-agregar">Agregar al carrito</button>
+    </div>
 
-<script>
-  const botonesAgregar = document.querySelectorAll('.btn-agregar');
-  const carrito = document.getElementById('carrito');
-  const itemsContenedor = carrito.querySelector('.items');
-  const totalElem = carrito.querySelector('.total');
-  const btnCerrar = document.getElementById('cerrarCarrito');
-  const btnComprar = document.getElementById('comprar');
+  </main>
 
-  let carritoItems = [];
-
-  function actualizarCarrito() {
-    itemsContenedor.innerHTML = '';
-    let total = 0;
-    carritoItems.forEach(item => {
-      const div = document.createElement('div');
-      div.classList.add('item');
-      div.innerHTML = `
-        <span>${item.nombre}</span>
-        <span>${item.precio}€</span>
-      `;
-      itemsContenedor.appendChild(div);
-      total += item.precio;
-    });
-    totalElem.textContent = `Total: ${total}€`;
-  }
-
-  botonesAgregar.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const producto = btn.closest('.producto');
-      const nombre = producto.dataset.name;
-      const precio = parseFloat(producto.dataset.price);
-      carritoItems.push({ nombre, precio });
-      actualizarCarrito();
-      carrito.classList.add('visible');
-    });
-  });
-
-  btnCerrar.addEventListener('click', () => {
-    carrito.classList.remove('visible');
-  });
-
-  btnComprar.addEventListener('click', () => {
-    if (carritoItems.length === 0) {
-      alert('Tu carrito está vacío.');
-      return;
-    }
-    // Abrir PayPal con productos y total. Aquí se puede integrar formulario o API PayPal real
-    alert('Aquí iría la integración real con PayPal. Por favor, deja tu correo en la Nota al vendedor.');
-  });
-</script>
+  <section id="reseñas">
+    <h2>Reseñas de clientes</h2>
+    <blockquote>
+      “ProveedorXpress me ayudó a encontrar justo lo que necesitaba rápido y sin problemas.”
+      <footer>- Carlos M.</footer>
+    </blockquote>
+    <blockquote>
+      “La calidad de los proveedores es excelente y el proceso de compra muy fácil.”
+      <footer>- Marta R.</footer>
+    </blockquote>
+    <blockquote>
+      “Recomiendo esta web a cualquiera que busque proveedores confiables y rápidos.”
+      <footer>- Javier P.</footer>
+    </blockquote>
+  </section>
 
 </body>
 </html>
