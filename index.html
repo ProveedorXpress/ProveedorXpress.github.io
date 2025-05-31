@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ProveedorXpress - Tienda</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+<style>
+  body {
+    margin: 0; 
+    font-family: 'Poppins', sans-serif;
+    background: #fff;
+    color: #000;
+  }
+  h1 {
+    text-align: center;
+    margin: 1rem 0;
+    font-weight: 700;
+  }
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 1rem 3rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+  }
+  .product {
+    border: 1px solid #eee;
+    border-radius: 8px;
+    width: 220px;
+    padding: 1rem;
+    box-shadow: 0 2px 6px rgb(0 0 0 / 0.05);
+    text-align: center;
+    transition: box-shadow 0.3s ease;
+    background: #fff;
+  }
+  .product:hover {
+    box-shadow: 0 8px 20px rgb(0 0 0 / 0.15);
+  }
+  .product img {
+    width: 100%;
+    border-radius: 6px;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+  .product img:hover {
+    transform: scale(1.05);
+  }
+  .product-name {
+    font-weight: 600;
+    margin: 0.8rem 0 0.3rem;
+    color: #000;
+  }
+  .prices {
+    margin-bottom: 1rem;
+  }
+  .price-original {
+    text-decoration: line-through;
+    color: #999;
+    margin-right: 0.6rem;
+  }
+  .price-final {
+    font-weight: 700;
+    color: #c49b00; /* amarillo oscuro */
+    font-size: 1.1rem;
+  }
+  button.add-cart {
+    background-color: #c49b00;
+    color: #fff;
+    border: none;
+    padding: 0.55rem 1.2rem;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  button.add-cart:hover {
+    background-color: #e1b800;
+    transform: scale(1.05);
+  }
+
+  /* Carrito lateral */
+  #cart {
+    position: fixed;
+    top: 0;
+    right: -320px; /* fuera de pantalla */
+    width: 320px;
+    height: 100vh;
+    background: #fff;
+    box-shadow: -4px 0 10px rgb(0 0 0 / 0.1);
+    padding: 1rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    transition: right 0.3s ease;
+    z-index: 9999;
+  }
+  #cart.open {
+    right: 0;
+  }
+  #cart h2 {
+    margin-top: 0;
+    font-weight: 700;
+    border-bottom: 2px solid #c49b00;
+    padding-bottom: 0.5rem;
+  }
+  #cart-list {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-top: 1rem;
+  }
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.9rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.4rem;
+  }
+  .cart-item-name {
+    font-weight: 600;
+    color: #000;
+  }
+  .cart-item-price {
+    font-weight: 600;
+    color: #c49b00;
+  }
+  #cart-total {
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin: 1rem 0;
+    border-top: 2px solid #c49b00;
+    padding-top: 0.5rem;
+    color: #c49b00;
+  }
+  #checkout-btn {
+    background-color: #c49b00;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  #checkout-btn:hover {
+    background-color: #e1b800;
+    transform: scale(1.05);
+  }
+  #checkout-instructions {
+    font-size: 0.85rem;
+    margin-top: 0.7rem;
+    color: #555;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .container {
+      justify-content: center;
+    }
+    #cart {
+      width: 100%;
+      max-width: 320px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<h1>ProveedorXpress</h1>
+
+<div class="container" id="products-container">
+  <!-- Productos se cargan aquí con JS -->
+</div>
+
+<!-- Carrito lateral -->
+<div id="cart">
+  <h2>Tu carrito</h2>
+  <div id="cart-list"></div>
+  <div id="cart-total"></div>
+  <button id="checkout-btn">Comprar con PayPal</button>
+  <div id="checkout-instructions">
+    Después de hacer clic, en PayPal deja tu email en <b>"Nota para el vendedor"</b> para enviarte los proveedores.
+  </div>
+</div>
+
+<script>
+  const products = [
+    { id:1, name:"Proveedor de ropa", priceOriginal: 20, priceFinal:10 },
+    { id:2, name:"Proveedor vapers", priceOriginal: 20, priceFinal:10 },
+    { id:3, name:"Proveedor zapas", priceOriginal: 20, priceFinal:10 },
+    { id:4, name:"Proveedor ropa vintage", priceOriginal: 20, priceFinal:10 },
+    { id:5, name:"Proveedor facturas editables", priceOriginal: 20, priceFinal:10 },
+    { id:6, name:"Proveedor fútbol", priceOriginal: 20, priceFinal:10 },
+    { id:7, name:"Proveedor relojes", priceOriginal: 20, priceFinal:10 },
+    { id:8, name:"Proveedor accesorios", priceOriginal: 20, priceFinal:10 },
+    { id:9, name:"Proveedor electrónica", priceOriginal: 20, priceFinal:10 },
+    { id:10, name:"Tickets", priceOriginal: 20, priceFinal:10 },
+    { id:11, name:"Proveedor perfumes", priceOriginal: 20, priceFinal:10 },
+  ];
+
+  // Packs especiales
+  const packs = [
+    { id: 1001, name: "Pack completo todos proveedores", price: 50 },
+    { id: 1002, name: "Pack aleatorio varios proveedores", price: 20 },
+  ];
+
+  const productsContainer = document.getElementById("products-container");
+  const cart = document.getElementById("cart");
+  const cartList = document.getElementById("cart-list");
+  const cartTotal = document.getElementById("cart-total");
+  const checkoutBtn = document.getElementById("checkout-btn");
+
+  let cartItems = [];
+
+  function createProductHTML(product) {
+    // Usamos una imagen genérica porque las pondrás tú luego
+    const imgSrc = `https://via.placeholder.com/220x140?text=${encodeURIComponent(product.name)}`;
+    return `
+      <div class="product" data-id="${product.id}">
+        <img src="${imgSrc}" alt="${product.name}" />
+        <div class="product-name">${product.name}</div>
+        <div class="prices">
+          <span class="price-original">€${product.priceOriginal.toFixed(2)}</span>
+          <span class="price-final">€${product.priceFinal.toFixed(2)}</span>
+        </div>
+        <button class="add-cart">Agregar al carrito</button>
+      </div>
+    `;
+  }
+
+  function createPackHTML(pack) {
+    const imgSrc = `https://via.placeholder.com/220x140?text=${encodeURIComponent(pack.name)}`;
+    return `
+      <div class="product" data-id="${pack.id}">
+        <img src="${imgSrc}" alt="${pack.name}" />
+        <div class="product-name">${pack.name}</div>
+        <div class="prices">
+          <span class="price-final">€${pack.price.toFixed(2)}</span>
+        </div>
+        <button class="add-cart">Agregar al carrito</button>
+      </div>
+    `;
+  }
+
+  function renderProducts() {
+    productsContainer.innerHTML = "";
+    products.forEach(p => {
+      productsContainer.insertAdjacentHTML("beforeend", createProductHTML(p));
+    });
+    packs.forEach(p => {
+      productsContainer.insertAdjacentHTML("beforeend", createPackHTML(p));
+    });
+  }
+
+  function updateCartUI() {
+    if(cartItems.length === 0) {
+      cartList.innerHTML = "<p>Tu carrito está vacío.</p>";
+      cartTotal.textContent = "";
+      cart.classList.remove("open");
+      return;
+    }
+    cart.classList.add("open");
+    cartList.innerHTML = "";
+    let total = 0;
+    cartItems.forEach(item => {
+      const name = item.name;
+      const price = item.price;
+      total += price;
+      cartList.insertAdjacentHTML("beforeend", `
+        <div class="cart-item">
+          <div class="cart-item-name">${name}</div>
+          <div class="cart-item-price">€${price.toFixed(2)}</div>
+        </div>
+      `);
+    });
+    cartTotal.textContent = `Total: €${total.toFixed(2)}`;
+  }
+
+  function addToCart(productId) {
+    let item;
+    if(productId >= 1000) { // Pack
+      item = packs.find(p => p.id === productId);
+      if(!item) return;
+      cartItems.push({ name: item.name, price: item.price });
+    } else {
+      item = products.find(p => p.id === productId);
+      if(!item) return;
+      cartItems.push({ name: item.name, price: item.priceFinal });
+    }
+    updateCartUI();
+  }
+
+  function generatePayPalLink() {
+    if(cartItems.length === 0) return;
+
+    const businessEmail = "nil678a@gmail.com"; // <== Cambia aquí tu correo PayPal
+    const currency = "EUR";
+
+    // PayPal URL para "Buy Now" con items es limitado sin backend,
+    // Usaremos "custom" con lista en nota y total.
+
+    const total = cartItems.reduce((sum, i) => sum + i.price, 0).toFixed(2);
+
+    const itemNames = cartItems.map(i => i.name).join(", ");
+    const note = encodeURIComponent(`Productos: ${itemNames} | Por favor, deja tu email en "Nota para el vendedor" en PayPal.`);
+
+    // Formato simple con "Buy Now" para el total
+    // El cliente pone su email en el campo "Nota para el vendedor"
+    const url = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${encodeURIComponent(businessEmail)}&currency_code=${currency}&amount=${total}&item_name=Compra+ProveedorXpress&custom=${note}`;
+
+    return url;
+  }
+
+  function setupListeners() {
+    productsContainer.addEventListener("click", e => {
+      if(e.target.classList.contains("add-cart")) {
+        const productDiv = e.target.closest(".product");
+        const id = parseInt(productDiv.getAttribute("data-id"));
+        addToCart(id);
+      }
+    });
+    checkoutBtn.addEventListener("click", () => {
+      const url = generatePayPalLink();
+      if(url) {
+        window.open(url, "_blank");
+      } else {
+        alert("Tu carrito está vacío.");
+      }
+    });
+  }
+
+  // Inicializar
+  renderProducts();
+  setupListeners();
+  updateCartUI();
+</script>
+
+</body>
+</html>
