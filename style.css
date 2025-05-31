@@ -1,0 +1,19 @@
+btnComprar.addEventListener('click', () => {
+  if (carritoItems.length === 0) {
+    alert('Tu carrito está vacío.');
+    return;
+  }
+  const total = carritoItems.reduce((sum, item) => sum + item.precio, 0);
+
+  // URL base para compras con PayPal (pago simple)
+  const paypalUrl = new URL('https://www.paypal.com/cgi-bin/webscr');
+  paypalUrl.searchParams.append('cmd', '_xclick');
+  paypalUrl.searchParams.append('business', 'nil678a@gmail.com'); // Cambia por tu email PayPal
+  paypalUrl.searchParams.append('item_name', 'Compra en ProveedorXpress');
+  paypalUrl.searchParams.append('amount', total.toFixed(2));
+  paypalUrl.searchParams.append('currency_code', 'EUR');
+  paypalUrl.searchParams.append('return', 'https://tuweb.com/gracias.html'); // URL a la que vuelve tras pago
+  paypalUrl.searchParams.append('cancel_return', 'https://tuweb.com/cancelado.html'); // Si cancela el pago
+
+  window.open(paypalUrl.toString(), '_blank');
+});
