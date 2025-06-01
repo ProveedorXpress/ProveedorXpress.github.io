@@ -478,4 +478,4 @@ body {
     main {
       grid-template-columns: 1fr;
     }
-  
+    #carrito { position: fixed; top: 0; right: 0; width: 100vw; /* o el ancho máximo que quieras */ max-width: 400px; height: 100vh; background: white; z-index: 2100; overflow-y: auto; /* ...otros estilos */ } .paypal-container { max-height: 70vh; /* ajusta según necesidad */ overflow-y: auto; padding-bottom: 20px; /* espacio extra por si el formulario es largo */ }
