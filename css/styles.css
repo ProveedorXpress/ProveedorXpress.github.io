@@ -487,3 +487,22 @@ body {
   background: #fff;      
   
 }
+#modal-debit-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+}
+
+.form-debit-card {
+  max-height: 80vh;
+  overflow-y: auto;
+  background: #fff;
+  padding: 16px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+}
