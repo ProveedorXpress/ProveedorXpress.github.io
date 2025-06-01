@@ -3,7 +3,7 @@ const productos = [
     { id:'ropa', nombre:'Proveedor de ropa', img:'assets/ropa.jpg', precioOrig:19.99, precioSale:9.99 },
     { id:'vapers', nombre:'Proveedor vapers', img:'assets/vapers.jpg', precioOrig:19.99, precioSale:9.99 },
     { id:'zapas', nombre:'Proveedor zapas', img:'assets/zapas.jpg', precioOrig:19.99, precioSale:9.99 },
-    { id:'vintage', nombre:'Proveedor ropa vintage', img:'assets/ropa_vintage.jpg', precioOrig:19.99, precioSale:9.99 },
+    { id:'vintage', nombre:'Proveedor ropa vintage', img:'assets/vintage.jpg', precioOrig:19.99, precioSale:9.99 },
     { id:'facturas', nombre:'Proveedor facturas editables', img:'assets/facturas.jpg', precioOrig:19.99, precioSale:9.99 },
     { id:'futbol', nombre:'Proveedor fútbol', img:'assets/futbol.jpg', precioOrig:19.99, precioSale:9.99 },
     { id:'relojes', nombre:'Proveedor relojes', img:'assets/relojes.jpg', precioOrig:19.99, precioSale:9.99 },
@@ -132,3 +132,7 @@ function renderPayPalButton(total) {
         alert('Error al procesar el pago. Inténtalo de nuevo.');
         }
     }).render('#paypal-button-container');
+}
+
+// Inicializar carrito vacío
+renderCarrito();
