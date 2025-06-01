@@ -478,4 +478,46 @@ body {
     main {
       grid-template-columns: 1fr;
     }
-    #carrito { position: fixed; top: 0; right: 0; width: 100vw; /* o el ancho máximo que quieras */ max-width: 400px; height: 100vh; background: white; z-index: 2100; overflow-y: auto; /* ...otros estilos */ } .paypal-container { max-height: 70vh; /* ajusta según necesidad */ overflow-y: auto; padding-bottom: 20px; /* espacio extra por si el formulario es largo */ }
+  #carrito {
+  position: fixed;
+  top: 0;
+  right: -450px;
+  width: 400px;
+  height: 100vh;
+  background: white;
+  box-shadow: -8px 0 40px rgba(0,0,0,0.15);
+  padding: 2rem 2rem 3rem;
+  display: flex;
+  flex-direction: column;
+  transition: right 0.4s cubic-bezier(0.4,0,0.2,1);
+  z-index: 2100;
+  overflow-y: auto; /* <--- Permite el scroll en el carrito completo */
+}
+
+#carrito.visible {
+  right: 0;
+}
+
+/* ...Resto de estilos del carrito... */
+
+#carrito .paypal-container {
+  margin-top: auto;
+  max-height: 70vh; /* Ajusta según necesidad */
+  overflow-y: auto; /* <--- Permite el scroll en el formulario de PayPal/tarjeta */
+  padding-bottom: 20px; /* Espacio extra por si el formulario es largo */
+}
+
+/* Responsive específicos para móviles */
+@media (max-width: 600px) {
+  #carrito {
+    width: 100vw;
+    max-width: 400px;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  .paypal-container {
+    max-height: 70vh;
+    overflow-y: auto;
+    padding-bottom: 20px;
+  }
+}
