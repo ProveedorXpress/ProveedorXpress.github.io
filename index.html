@@ -3,127 +3,117 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ProveedorXpress - Proveedores de Calidad</title>
+<title>ProveedorXpress</title>
 <style>
-  /* RESET */
-  * {
-    margin: 0; padding: 0; box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
   body {
     background: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0; padding: 0;
     color: #222;
   }
-  header {
+  h1 {
     text-align: center;
-    padding: 2rem 1rem 1rem;
-    background: white;
-    box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
-  }
-  header h1 {
-    font-size: 2.8rem;
-    color: #111;
-    letter-spacing: 2px;
-    margin-bottom: 0.2rem;
-  }
-  header p {
-    font-size: 1.2rem;
-    color: #555;
-    font-weight: 500;
+    margin: 1.5rem 0;
+    color: #cc9900;
+    font-weight: 900;
   }
   main {
     max-width: 1200px;
-    margin: 2rem auto 4rem;
-    display: flex;
-    justify-content: space-around;
-    gap: 2rem;
-    flex-wrap: wrap;
-    padding: 0 1rem;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    padding: 0 1rem 3rem;
   }
-  .producto {
+  article.producto {
     background: white;
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgb(0 0 0 / 0.12);
-    width: 31%;
-    min-width: 280px;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(204 153 0 / 0.2);
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 1.5rem;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
-  .producto:hover {
-    transform: translateY(-12px);
+  article.producto:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(204 153 0 / 0.4);
   }
-  .producto img {
+  article.producto img {
     width: 100%;
-    max-height: 280px;
+    height: 200px;
     object-fit: cover;
-    border-radius: 12px;
-    transition: transform 0.3s ease;
-    cursor: pointer;
+    border-bottom: 2px solid #cc9900;
   }
-  .producto img:hover {
-    transform: scale(1.08);
-  }
-  .producto h2 {
-    margin: 1.1rem 0 0.5rem;
-    font-size: 1.9rem;
-    color: #111;
-    text-align: center;
+  article.producto h2 {
+    font-size: 1.3rem;
+    margin: 1rem;
+    color: #333;
+    flex-grow: 1;
   }
   .precio {
-    font-size: 1.5rem;
-    margin-bottom: 1.2rem;
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    align-items: baseline;
+    text-align: center;
+    margin: 0 1rem 1rem;
+    font-size: 1.3rem;
   }
   .precio .tachado {
     text-decoration: line-through;
     color: #999;
+    margin-right: 0.8rem;
     font-weight: 600;
-    font-size: 1.3rem;
   }
   .precio .nuevo {
     color: #cc9900;
-    font-weight: 800;
-    font-size: 1.8rem;
+    font-weight: 900;
   }
   button.agregar {
+    margin: 0 1.5rem 1.5rem;
+    padding: 0.8rem 0;
+    border: none;
     background-color: #cc9900;
     color: white;
-    border: none;
-    padding: 0.9rem 3rem;
-    font-size: 1.2rem;
-    border-radius: 8px;
-    cursor: pointer;
-    box-shadow: 0 6px 16px rgba(204, 153, 0, 0.4);
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    width: 100%;
-    max-width: 320px;
     font-weight: 700;
-    letter-spacing: 0.05em;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 6px 15px rgba(204 153 0 / 0.5);
+    transition: background-color 0.3s ease, transform 0.2s ease;
   }
   button.agregar:hover {
     background-color: #b27f00;
-    transform: scale(1.06);
+    transform: scale(1.05);
   }
 
-  /* Carrito lateral */
+  #btnCarrito {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    background-color: #cc9900;
+    color: white;
+    padding: 1rem 1.7rem;
+    border-radius: 30px;
+    font-size: 1.6rem;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(204 153 0 / 0.6);
+    z-index: 2000;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+  #btnCarrito:hover {
+    background-color: #b27f00;
+  }
+
   #carrito {
     position: fixed;
-    top: 0; right: -420px;
-    width: 420px;
+    top: 0;
+    right: -450px;
+    width: 400px;
     height: 100vh;
     background: white;
-    box-shadow: -6px 0 30px rgb(0 0 0 / 0.18);
-    padding: 2rem 2rem 2rem 2rem;
+    box-shadow: -8px 0 40px rgba(0,0,0,0.15);
+    padding: 2rem 2rem 3rem;
     display: flex;
     flex-direction: column;
-    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 1500;
+    transition: right 0.4s cubic-bezier(0.4,0,0.2,1);
+    z-index: 2100;
   }
   #carrito.visible {
     right: 0;
@@ -136,13 +126,14 @@
   }
   #carrito header h3 {
     font-size: 2rem;
-    border-bottom: 3px solid #cc9900;
-    padding-bottom: 0.4rem;
+    font-weight: 900;
+    color: #cc9900;
+    letter-spacing: 0.05em;
   }
   #carrito header button.cerrar {
     background: none;
     border: none;
-    font-size: 2.4rem;
+    font-size: 2.6rem;
     color: #999;
     cursor: pointer;
     transition: color 0.3s ease;
@@ -150,13 +141,12 @@
   #carrito header button.cerrar:hover {
     color: #cc9900;
   }
-
   #carrito ul {
-    list-style: none;
     flex-grow: 1;
     overflow-y: auto;
-    margin-bottom: 1.5rem;
     padding-right: 0.5rem;
+    list-style: none;
+    margin-bottom: 1.5rem;
   }
   #carrito ul::-webkit-scrollbar {
     width: 6px;
@@ -166,39 +156,41 @@
     border-radius: 3px;
   }
   #carrito ul li {
-    margin-bottom: 1.2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #eee;
-    padding-bottom: 0.6rem;
+    padding: 0.6rem 0;
   }
   #carrito ul li span.nombre {
+    flex: 1 1 140px;
     font-weight: 700;
-    font-size: 1.1rem;
     color: #222;
   }
-  #carrito ul li span.precio {
-    color: #cc9900;
-    font-weight: 700;
-    font-size: 1.1rem;
-    margin-right: 0.6rem;
+  #carrito ul li input.cantidad {
+    width: 50px;
+    border: 1.8px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    text-align: center;
+    margin: 0 0.8rem;
+    padding: 0.2rem 0.4rem;
   }
-  #carrito ul li span.tachado {
-    color: #999;
-    font-weight: 600;
-    text-decoration: line-through;
-    font-size: 0.95rem;
-    margin-right: 0.5rem;
+  #carrito ul li span.precio {
+    font-weight: 900;
+    color: #cc9900;
+    min-width: 60px;
+    text-align: right;
   }
   #carrito ul li button.eliminar {
     background: none;
     border: none;
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     color: #cc9900;
     cursor: pointer;
-    font-weight: 700;
+    font-weight: 900;
     transition: color 0.3s ease;
+    margin-left: 10px;
   }
   #carrito ul li button.eliminar:hover {
     color: #b27f00;
@@ -206,231 +198,190 @@
   #carrito .total {
     font-weight: 900;
     font-size: 1.6rem;
-    margin-bottom: 1.8rem;
-    border-top: 3px solid #cc9900;
-    padding-top: 1rem;
     color: #222;
     text-align: right;
+    border-top: 3px solid #cc9900;
+    padding-top: 1rem;
+    margin-bottom: 1rem;
   }
-  #carrito label {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    display: block;
-    color: #333;
+  #carrito .paypal-container {
+    margin-top: auto;
   }
-  #carrito input[type="email"] {
-    width: 100%;
-    padding: 0.6rem 1rem;
-    margin-bottom: 1.5rem;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
-  }
-  #carrito input[type="email"]:focus {
-    border-color: #cc9900;
-    outline: none;
-  }
-  #carrito button.comprar {
-    background-color: #0070ba; /* PayPal blue */
-    color: white;
-    border: none;
-    padding: 1rem;
-    font-size: 1.3rem;
-    border-radius: 12px;
-    cursor: pointer;
-    text-align: center;
-    box-shadow: 0 5px 15px rgba(0,112,186,0.6);
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    font-weight: 700;
-  }
-  #carrito button.comprar:hover {
-    background-color: #004c99;
-    box-shadow: 0 7px 20px rgba(0,76,153,0.8);
-  }
-
-  /* Botón carrito visible */
-  #btnCarrito {
-    position: fixed;
-    top: 50%;
-    right: 0;
-    background: #cc9900;
-    color: white;
-    padding: 1.2rem 1.8rem;
-    font-size: 1.7rem;
-    border-top-left-radius: 14px;
-    border-bottom-left-radius: 14px;
-    cursor: pointer;
-    box-shadow: -2px 0 12px rgb(204 153 0 / 0.8);
-    z-index: 1600;
-    user-select: none;
-    transition: background-color 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    font-weight: 700;
-  }
-  #btnCarrito:hover {
-    background-color: #b27f00;
-  }
-  #btnCarrito svg {
-    fill: white;
-    width: 24px;
-    height: 24px;
-  }
-
-  /* Responsive */
-  @media (max-width: 860px) {
+  @media (max-width: 950px) {
     main {
-      justify-content: center;
-    }
-    .producto {
-      width: 90%;
-      max-width: 480px;
+      grid-template-columns: repeat(2, 1fr);
     }
     #carrito {
       width: 100vw;
-      right: -100vw;
+      max-width: 400px;
     }
-    #carrito.visible {
-      right: 0;
+  }
+  @media (max-width: 600px) {
+    main {
+      grid-template-columns: 1fr;
     }
   }
 </style>
 </head>
 <body>
 
-<header>
-  <h1>ProveedorXpress</h1>
-  <p>Los mejores proveedores en un solo lugar</p>
-</header>
+<h1>ProveedorXpress</h1>
 
-<main>
-  <article class="producto" data-id="1" data-nombre="Remera algodón" data-precio="500" data-descuento="50">
-    <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=600&q=80" alt="Remera algodón">
-    <h2>Remera algodón</h2>
-    <div class="precio">
-      <span class="tachado">$500</span>
-      <span class="nuevo">$450</span>
-    </div>
-    <button class="agregar">Agregar al carrito</button>
-  </article>
-
-  <article class="producto" data-id="2" data-nombre="Zapatos deportivos" data-precio="1200" data-descuento="200">
-    <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=600&q=80" alt="Zapatos deportivos">
-    <h2>Zapatos deportivos</h2>
-    <div class="precio">
-      <span class="tachado">$1200</span>
-      <span class="nuevo">$1000</span>
-    </div>
-    <button class="agregar">Agregar al carrito</button>
-  </article>
-
-  <article class="producto" data-id="3" data-nombre="Bolso de cuero" data-precio="950" data-descuento="100">
-    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="Bolso de cuero">
-    <h2>Bolso de cuero</h2>
-    <div class="precio">
-      <span class="tachado">$950</span>
-      <span class="nuevo">$850</span>
-    </div>
-    <button class="agregar">Agregar al carrito</button>
-  </article>
+<main id="productos">
+  <!-- Se inyectan 12 proveedores + 2 packs -->
 </main>
 
-<!-- Botón para abrir carrito -->
-<button id="btnCarrito" aria-label="Abrir carrito">
-  🛒 Carrito
-</button>
+<button id="btnCarrito" aria-label="Abrir carrito">🛒 Carrito</button>
 
-<!-- Carrito lateral -->
-<aside id="carrito" aria-label="Carrito de compras">
+<aside id="carrito" aria-label="Carrito de compras" role="region" aria-live="polite">
   <header>
-    <h3>Tu Carrito</h3>
-    <button class="cerrar" aria-label="Cerrar carrito">&times;</button>
+    <h3>Tu carrito</h3>
+    <button class="cerrar" id="cerrarCarrito" aria-label="Cerrar carrito">&times;</button>
   </header>
-  <ul></ul>
-  <div class="total">Total: $0</div>
-  <label for="email">Email para recibir compra</label>
-  <input type="email" id="email" placeholder="tucorreo@ejemplo.com" />
-  <button class="comprar">Comprar con PayPal</button>
+  <ul id="listaCarrito"></ul>
+  <div class="total" id="total">Total: 0€</div>
+  <div class="paypal-container" id="paypal-button-container"></div>
 </aside>
 
+<!-- PayPal SDK con tu Client ID -->
+<script src="https://www.paypal.com/sdk/js?client-id=AaB66xFftPZMR4JyEunStmiuR-TmzvIQPmM12pKow5BdeKCrPrpQz5U919rhC7ea7zmFn5c-c0GW5Dhx&currency=EUR"></script>
 <script>
+  // Lista de productos
+  const productos = [
+    { id:'ropa', nombre:'Proveedor de ropa', img:'ropa.jpg', precioOrig:20, precioSale:10 },
+    { id:'vapers', nombre:'Proveedor vapers', img:'vapers.jpg', precioOrig:20, precioSale:10 },
+    { id:'zapas', nombre:'Proveedor zapas', img:'zapas.jpg', precioOrig:20, precioSale:10 },
+    { id:'vintage', nombre:'Proveedor ropa vintage', img:'vintage.jpg', precioOrig:20, precioSale:10 },
+    { id:'facturas', nombre:'Proveedor facturas editables', img:'facturas.jpg', precioOrig:20, precioSale:10 },
+    { id:'futbol', nombre:'Proveedor fútbol', img:'futbol.jpg', precioOrig:20, precioSale:10 },
+    { id:'relojes', nombre:'Proveedor relojes', img:'relojes.jpg', precioOrig:20, precioSale:10 },
+    { id:'accesorios', nombre:'Proveedor accesorios', img:'accesorios.jpg', precioOrig:20, precioSale:10 },
+    { id:'electronica', nombre:'Proveedor electrónica', img:'electronica.jpg', precioOrig:20, precioSale:10 },
+    { id:'tickets', nombre:'Tickets', img:'tickets.jpg', precioOrig:20, precioSale:10 },
+    { id:'perfumes', nombre:'Proveedor perfumes', img:'perfumes.jpg', precioOrig:20, precioSale:10 },
+    { id:'pack-completo', nombre:'Pack completo de todos los proveedores', img:'pack.jpg', precioOrig:100, precioSale:50 },
+    { id:'pack-aleatorio', nombre:'Pack aleatorio de varios proveedores', img:'aleatorios.jpg', precioOrig:40, precioSale:20 }
+  ];
+
+  const productosContainer = document.getElementById('productos');
+  const carritoBtn = document.getElementById('btnCarrito');
   const carrito = document.getElementById('carrito');
-  const btnCarrito = document.getElementById('btnCarrito');
-  const listaCarrito = carrito.querySelector('ul');
-  const totalCarrito = carrito.querySelector('.total');
-  const cerrarCarritoBtn = carrito.querySelector('.cerrar');
+  const cerrarCarrito = document.getElementById('cerrarCarrito');
+  const listaCarrito = document.getElementById('listaCarrito');
+  const totalSpan = document.getElementById('total');
 
-  let carritoProductos = [];
+  // Estado del carrito
+  let carritoItems = {};
 
-  function actualizarCarrito() {
-    listaCarrito.innerHTML = '';
-
-    let total = 0;
-    carritoProductos.forEach(producto => {
-      const descuento = producto.descuento || 0;
-      const precioConDescuento = producto.precio - descuento;
-      total += precioConDescuento * producto.cantidad;
-
-      const li = document.createElement('li');
-      li.innerHTML = `
-        <span class="nombre">${producto.nombre} x${producto.cantidad}</span>
-        <div>
-          ${descuento > 0 ? `<span class="tachado">$${producto.precio}</span>` : ''}
-          <span class="precio">$${precioConDescuento * producto.cantidad}</span>
-          <button class="eliminar" aria-label="Eliminar ${producto.nombre} del carrito">&times;</button>
-        </div>
-      `;
-      // Botón eliminar producto
-      li.querySelector('.eliminar').addEventListener('click', () => {
-        eliminarProducto(producto.id);
-      });
-      listaCarrito.appendChild(li);
-    });
-    totalCarrito.textContent = `Total: $${total}`;
-  }
-
-  function eliminarProducto(id) {
-    carritoProductos = carritoProductos.filter(p => p.id !== id);
-    actualizarCarrito();
-  }
-
-  function agregarProducto(producto) {
-    // Verificar si ya existe en el carrito
-    const index = carritoProductos.findIndex(p => p.id === producto.id);
-    if(index !== -1) {
-      carritoProductos[index].cantidad++;
-    } else {
-      producto.cantidad = 1;
-      carritoProductos.push(producto);
-    }
-    actualizarCarrito();
-    if(!carrito.classList.contains('visible')){
-      carrito.classList.add('visible');
-    }
-  }
-
-  // Agregar evento a botones
-  document.querySelectorAll('.producto button.agregar').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const card = e.target.closest('.producto');
-      const id = Number(card.dataset.id);
-      const nombre = card.dataset.nombre;
-      const precio = Number(card.dataset.precio);
-      const descuento = Number(card.dataset.descuento);
-      agregarProducto({id, nombre, precio, descuento});
-    });
+  // Renderizar productos en el DOM
+  productos.forEach(p => {
+    const art = document.createElement('article');
+    art.className = 'producto';
+    art.dataset.id = p.id;
+    art.innerHTML = `
+      <img src="${p.img}" alt="${p.nombre}">
+      <h2>${p.nombre}</h2>
+      <div class="precio">
+        <span class="tachado">${p.precioOrig}€</span>
+        <span class="nuevo">${p.precioSale}€</span>
+      </div>
+      <button class="agregar">Añadir al carrito</button>
+    `;
+    productosContainer.appendChild(art);
   });
 
   // Mostrar/ocultar carrito
-  btnCarrito.addEventListener('click', () => {
-    carrito.classList.toggle('visible');
+  carritoBtn.addEventListener('click', () => {
+    carrito.classList.add('visible');
   });
-  cerrarCarritoBtn.addEventListener('click', () => {
+  cerrarCarrito.addEventListener('click', () => {
     carrito.classList.remove('visible');
   });
-</script>
 
+  // Añadir productos al carrito
+  document.querySelectorAll('button.agregar').forEach(btn => {
+    btn.addEventListener('click', e => {
+      const art = e.target.closest('article');
+      const id = art.dataset.id;
+      const prod = productos.find(x => x.id === id);
+      if (!carritoItems[id]) {
+        carritoItems[id] = { nombre: prod.nombre, precio: prod.precioSale, cantidad: 1 };
+      } else {
+        carritoItems[id].cantidad++;
+      }
+      renderCarrito();
+      carrito.classList.add('visible');
+    });
+  });
+
+  // Renderizar carrito
+  function renderCarrito() {
+    listaCarrito.innerHTML = '';
+    let total = 0;
+    Object.keys(carritoItems).forEach(id => {
+      const item = carritoItems[id];
+      total += item.precio * item.cantidad;
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <span class="nombre">${item.nombre}</span>
+        <input type="number" class="cantidad" min="1" value="${item.cantidad}" data-id="${id}">
+        <span class="precio">${(item.precio * item.cantidad).toFixed(2)}€</span>
+        <button class="eliminar" data-id="${id}">&times;</button>
+      `;
+      listaCarrito.appendChild(li);
+
+      // Control cantidad
+      li.querySelector('input.cantidad').addEventListener('change', e => {
+        let val = parseInt(e.target.value);
+        if (isNaN(val) || val < 1) val = 1;
+        carritoItems[id].cantidad = val;
+        renderCarrito();
+      });
+
+      // Botón eliminar
+      li.querySelector('button.eliminar').addEventListener('click', () => {
+        delete carritoItems[id];
+        renderCarrito();
+      });
+    });
+    totalSpan.textContent = `Total: ${total.toFixed(2)}€`;
+    renderPayPalButton(total);
+  }
+
+  // Renderizar botón PayPal en carrito
+  function renderPayPalButton(total) {
+    document.getElementById('paypal-button-container')?.remove();
+    const container = document.createElement('div');
+    container.id = 'paypal-button-container';
+    container.style.marginTop = 'auto';
+    carrito.appendChild(container);
+
+    paypal.Buttons({
+      style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal' },
+      createOrder: function(data, actions) {
+        return actions.order.create({
+          purchase_units: [{
+            amount: { currency_code: 'EUR', value: total.toFixed(2) }
+          }]
+        });
+      },
+      onApprove: function(data, actions) {
+        return actions.order.capture().then(details => {
+          alert(`Gracias por tu compra, ${details.payer.name.given_name}!`);
+          carritoItems = {};
+          renderCarrito();
+          carrito.classList.remove('visible');
+        });
+      },
+      onError: function(err) {
+        console.error(err);
+        alert('Error al procesar el pago. Inténtalo de nuevo.');
+      }
+    }).render('#paypal-button-container');
+  }
+
+  // Inicializar carrito vacío
+  renderCarrito();
+</script>
 </body>
 </html>
