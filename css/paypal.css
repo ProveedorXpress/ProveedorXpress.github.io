@@ -1,0 +1,21 @@
+/* paypal.css */
+.paypal-container {
+  max-height: 350px; /* Ajusta según sea necesario */
+  overflow-y: auto;
+  margin-top: 12px;
+  padding-right: 8px;
+  border-top: 2px solid #cc9900;
+}
+
+.paypal-scroll {
+  padding-bottom: 24px;
+}
+
+.paypal-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.paypal-container::-webkit-scrollbar-thumb {
+  background: #cc9900;
+  border-radius: 4px;
+}
