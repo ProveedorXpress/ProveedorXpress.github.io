@@ -19,14 +19,18 @@
   <button id="btnCarrito" aria-label="Abrir carrito">🛒 Carrito</button>
 
   <aside id="carrito" aria-label="Carrito de compras" role="region" aria-live="polite">
-    <header>
-      <h3>Tu carrito</h3>
-      <button class="cerrar" id="cerrarCarrito" aria-label="Cerrar carrito">&times;</button>
-    </header>
-    <ul id="listaCarrito"></ul>
-    <div class="total" id="total">Total: 0$</div>
-    <div class="paypal-container" id="paypal-button-container"></div>
-  </aside>
+  <header>
+    <h3>Tu carrito</h3>
+    <button class="cerrar" id="cerrarCarrito" aria-label="Cerrar carrito">&times;</button>
+  </header>
+  <ul id="listaCarrito"></ul>
+  <div class="total" id="total">Total: 0$</div>
+
+  <!-- Scrollable container para PayPal -->
+  <div class="paypal-container">
+    <div class="paypal-scroll" id="paypal-button-container"></div>
+  </div>
+</aside>
 
   <em id = "avis">* ProveedorXpress actúa únicamente como intermediario en la entrega de información de contacto de proveedores, sin participar en las relaciones comerciales, condiciones laborales, acuerdos, negociaciones o transacciones que puedan derivarse de dicho contacto. Por lo tanto, ProveedorXpress no asume responsabilidad alguna por la calidad del servicio, cumplimiento de acuerdos, trato, comportamiento, daños, perjuicios, pérdidas económicas o cualquier otra consecuencia derivada de la relación entre el cliente y el proveedor.</em>
 
