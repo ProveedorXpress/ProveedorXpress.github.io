@@ -67,4 +67,19 @@ h1 {
     padding: 0 20px;
   }
 }
+/* Animación de resplandor suave */
+@keyframes brilloSuave {
+  0%, 100% {
+    text-shadow:
+      2px 2px 4px rgba(0,0,0,0.3),
+      0 0 10px rgba(255, 255, 255, 0.3),
+      0 0 20px rgba(255, 255, 255, 0.2);
+  }
+  50% {
+    text-shadow:
+      2px 2px 4px rgba(0,0,0,0.3),
+      0 0 15px rgba(255, 255, 255, 0.6),
+      0 0 30px rgba(255, 255, 255, 0.4);
+  }
+}
 
