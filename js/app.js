@@ -136,3 +136,16 @@ function renderPayPalButton(total) {
 
 // Inicializar carrito vacío
 renderCarrito();
+function abrirCarrito() {
+  document.getElementById("carrito").classList.add("visible");
+  document.body.style.overflow = "hidden"; // Bloquea el scroll del fondo
+}
+
+function cerrarCarrito() {
+  document.getElementById("carrito").classList.remove("visible");
+  document.body.style.overflow = ""; // Restaura el scroll del fondo
+}
+
+// Ejemplo de uso si tienes un botón para abrir/cerrar el carrito
+document.getElementById("btnCarrito").addEventListener("click", abrirCarrito);
+document.getElementById("cerrar-carrito").addEventListener("click", cerrarCarrito);
