@@ -463,6 +463,7 @@ body {
   }
   #carrito .paypal-container {
     margin-top: auto;
+    overflow-y: scroll;
   }
   @media (max-width: 950px) {
     main {
