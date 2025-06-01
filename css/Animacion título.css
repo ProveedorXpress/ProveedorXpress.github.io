@@ -5,10 +5,11 @@ h1 {
   color: #666;
   text-align: center;
   margin-top: 40px;
-  animation: entradaRebote 1s ease-out both;
   letter-spacing: 2px;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  animation: entradaRebote 1s ease-out both, brilloSuave 3s ease-in-out infinite;
 }
+
 
 /* Animación de entrada con rebote */
 @keyframes entradaRebote {
