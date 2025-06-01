@@ -19,3 +19,13 @@
   background: #cc9900;
   border-radius: 4px;
 }
+/* Evita que el body se desplace cuando el carrito esté abierto */
+body.no-scroll {
+  overflow: hidden;
+}
+
+/* Hace que el carrito permita hacer scroll interno */
+#carrito {
+  max-height: 90vh;
+  overflow-y: auto;
+}
