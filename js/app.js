@@ -136,3 +136,12 @@ function renderPayPalButton(total) {
 
 // Inicializar carrito vacío
 renderCarrito();
+document.getElementById('btnCarrito').addEventListener('click', () => {
+  document.getElementById('carrito').style.display = 'block';
+  document.body.classList.add('no-scroll');
+});
+
+document.getElementById('cerrarCarrito').addEventListener('click', () => {
+  document.getElementById('carrito').style.display = 'none';
+  document.body.classList.remove('no-scroll');
+});
