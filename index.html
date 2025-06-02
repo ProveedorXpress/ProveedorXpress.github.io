@@ -17,9 +17,9 @@
   <div id="cookieOverlay" class="cookie-overlay">
     <div class="cookie-modal">
       <h2>Términos y Condiciones de Servicio</h2>
-      
+
       <p>Antes de continuar, es importante que leas y aceptes nuestros términos de servicio:</p>
-      
+
       <ul class="terms-list">
         <li><span class="highlight">No hay devoluciones:</span> Todos los productos digitales (información de contacto de proveedores) son finales una vez entregados.</li>
         <li><span class="highlight">Servicio de intermediación:</span> ProveedorXpress actúa únicamente como intermediario en la entrega de información de contacto.</li>
@@ -28,12 +28,12 @@
         <li><span class="highlight">Uso de cookies:</span> Utilizamos cookies técnicas necesarias para el funcionamiento del sitio web y el procesamiento de pagos.</li>
         <li><span class="highlight">Datos personales:</span> Tus datos de contacto y pago se procesan de forma segura únicamente para completar tu pedido.</li>
       </ul>
-      
+
       <div class="checkbox-container">
         <input type="checkbox" id="acceptTerms" />
         <label for="acceptTerms">He leído y acepto los términos y condiciones</label>
       </div>
-      
+
       <div class="cookie-buttons">
         <button id="acceptBtn" class="btn-accept" disabled>Aceptar y Continuar</button>
         <button id="declineBtn" class="btn-decline">Rechazar y Salir</button>
@@ -43,13 +43,13 @@
 
   <h1>ProveedorXpress</h1>
   <p id="subtitle">Consigue los datos de contacto de los proveedores más confiables de tu sector. Servicio rápido y seguro.</p>
-  
+
   <main id="productos">
     <!-- Se inyectan 12 proveedores + 2 packs -->
   </main>
-  
+
   <button id="btnCarrito" aria-label="Abrir carrito">🛒 Carrito</button>
-  
+
   <aside id="carrito" aria-label="Carrito de compras" role="region" aria-live="polite">
     <header>
       <h3>Tu carrito</h3>
@@ -62,11 +62,11 @@
       <div class="paypal-scroll" id="paypal-button-container"></div>
     </div>
   </aside>
-  
+
   <!-- Sección de comparación -->
   <section class="comparison-section">
     <h2 class="comparison-title">Nosotros vs Otros</h2>
-    
+
     <div class="comparison-container">
       <!-- Columna ProveedorXpress -->
       <div class="comparison-card">
@@ -88,7 +88,7 @@
           </li>
         </ul>
       </div>
-      
+
       <!-- Columna Others -->
       <div class="comparison-card">
         <div class="card-header">
@@ -110,11 +110,11 @@
         </ul>
       </div>
     </div>
-    
+
     <!-- Sección de Resultados Actuales -->
     <div class="results-section">
       <h3 class="results-title">Resultados Actuales</h3>
-      
+
       <div class="results-grid">
         <div class="result-item">
           <div class="result-circle">
@@ -122,14 +122,14 @@
           </div>
           <div class="result-text">Satisfacción de los Clientes</div>
         </div>
-        
+
         <div class="result-item">
           <div class="result-circle">
             <span class="result-percentage">100%</span>
           </div>
           <div class="result-text">Rapidez y Seguridad de los Envíos</div>
         </div>
-        
+
         <div class="result-item">
           <div class="result-circle">
             <span class="result-percentage">100%</span>
@@ -142,13 +142,13 @@
 
   <!-- Contenedor donde se cargará la sección de reseñas -->
   <div id="reviews-container"></div>
-  
+
   <em id="avis">* ProveedorXpress actúa únicamente como intermediario en la entrega de información de contacto de proveedores, sin participar en las relaciones comerciales, condiciones laborales, acuerdos, negociaciones o transacciones que puedan derivarse de dicho contacto. Por lo tanto, ProveedorXpress no asume responsabilidad alguna por la calidad del servicio, cumplimiento de acuerdos, trato, comportamiento, daños, perjuicios, pérdidas económicas o cualquier otra consecuencia derivada de la relación entre el cliente y el proveedor.</em>
   <p id="copy">© ProveedorXpress 2025. Todos los derechos reservados.</p>
-  
+
   <script src="https://www.paypal.com/sdk/js?client-id=AaB66xFftPZMR4JyEunStmiuR-TmzvIQPmM12pKow5BdeKCrPrpQz5U919rhC7ea7zmFn5c-c0GW5Dhx&currency=EUR"></script>
   <script src="./js/app.js"></script>
-  
+
   <script>
     // JavaScript para el modal de términos y cookies
     document.addEventListener('DOMContentLoaded', function() {
@@ -156,17 +156,19 @@
       const checkbox = document.getElementById('acceptTerms');
       const acceptBtn = document.getElementById('acceptBtn');
       const declineBtn = document.getElementById('declineBtn');
-      
+
       // Verificar si ya se aceptaron los términos
       if (localStorage.getItem('termsAccepted') === 'true') {
         overlay.style.display = 'none';
+      } else {
+        overlay.style.display = 'block'; // Show the overlay if not accepted
       }
-      
+
       // Habilitar/deshabilitar botón según checkbox
       checkbox.addEventListener('change', function() {
-        acceptBtn.disabled = !checkbox.checked;
+          acceptBtn.disabled = !this.checked; // Use 'this' instead of 'checkbox'
       });
-      
+
       // Aceptar términos
       acceptBtn.addEventListener('click', function() {
         if (checkbox.checked) {
@@ -174,7 +176,7 @@
           overlay.style.display = 'none';
         }
       });
-      
+
       // Rechazar términos
       declineBtn.addEventListener('click', function() {
         alert('Debes aceptar los términos para continuar usando el sitio web.');
