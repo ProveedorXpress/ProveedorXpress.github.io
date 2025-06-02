@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comparación ProveedorXpress</title>
+  <style>
+    /* Estilos para la sección de comparación */
+    .comparison-section {
+      max-width: 1200px;
+      margin: 60px auto 40px;
+      padding: 0 20px;
+      text-align: center;
+    }
+
+    .comparison-title {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: #cc9900;
+      margin-bottom: 40px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .comparison-container {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 50px;
+      flex-wrap: wrap;
+    }
+
+    .comparison-card {
+      background: white;
+      border-radius: 16px;
+      padding: 30px 25px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      min-width: 280px;
+      flex: 1;
+      max-width: 400px;
+    }
+
+    .comparison-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 35px rgba(204, 153, 0, 0.3);
+    }
+
+    .card-header {
+      margin-bottom: 25px;
+    }
+
+    .card-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .econsamm-title {
+      color: #cc9900;
+    }
+
+    .others-title {
+      color: #666;
+    }
+
+    .comparison-items {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .comparison-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 1rem;
+      color: #444;
+    }
+
+    .comparison-item:last-child {
+      border-bottom: none;
+    }
+
+    .feature-text {
+      flex: 1;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    .check-icon {
+      color: #cc9900;
+      font-size: 1.3rem;
+      font-weight: 900;
+      margin-left: 15px;
+    }
+
+    .cross-icon {
+      color: #999;
+      font-size: 1.3rem;
+      font-weight: 900;
+      margin-left: 15px;
+    }
+
+    /* Sección de resultados actuales */
+    .results-section {
+      background: linear-gradient(135deg, #fff9e6 0%, #ffffff 100%);
+      border-radius: 20px;
+      padding: 40px 30px;
+      margin-top: 40px;
+      box-shadow: 0 8px 25px rgba(204, 153, 0, 0.1);
+    }
+
+    .results-title {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #333;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .result-item {
+      display: flex;
+      align-items: center;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      transition: transform 0.2s ease;
+    }
+
+    .result-item:hover {
+      transform: scale(1.02);
+    }
+
+    .result-circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #cc9900, #e6c132);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 20px;
+      flex-shrink: 0;
+    }
+
+    .result-percentage {
+      color: white;
+      font-weight: 900;
+      font-size: 1.1rem;
+    }
+
+    .result-text {
+      color: #444;
+      font-weight: 600;
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .comparison-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .comparison-card {
+        max-width: none;
+        width: 100%;
+      }
+      
+      .comparison-title {
+        font-size: 2rem;
+      }
+      
+      .results-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .comparison-section {
+        padding: 0 15px;
+      }
+      
+      .comparison-title {
+        font-size: 1.8rem;
+      }
+      
+      .card-title {
+        font-size: 1.5rem;
+      }
+      
+      .comparison-card {
+        padding: 25px 20px;
+      }
+      
+      .results-section {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <section class="comparison-section">
+    <h2 class="comparison-title">Nosotros vs Otros</h2>
+    
+    <div class="comparison-container">
+      <!-- Columna EconSamm -->
+      <div class="comparison-card">
+        <div class="card-header">
+          <h3 class="card-title econsamm-title">EconSamm</h3>
+        </div>
+        <ul class="comparison-items">
+          <li class="comparison-item">
+            <span class="feature-text">Envíos Internacionales</span>
+            <span class="check-icon">✓</span>
+          </li>
+          <li class="comparison-item">
+            <span class="feature-text">+3 Años de Experiencia</span>
+            <span class="check-icon">✓</span>
+          </li>
+          <li class="comparison-item">
+            <span class="feature-text">+20.000 Clientes Satisfechos</span>
+            <span class="check-icon">✓</span>
+          </li>
+        </ul>
+      </div>
+      
+      <!-- Columna Others -->
+      <div class="comparison-card">
+        <div class="card-header">
+          <h3 class="card-title others-title">Others</h3>
+        </div>
+        <ul class="comparison-items">
+          <li class="comparison-item">
+            <span class="feature-text">Envíos Internacionales</span>
+            <span class="cross-icon">✗</span>
+          </li>
+          <li class="comparison-item">
+            <span class="feature-text">+3 Años de Experiencia</span>
+            <span class="cross-icon">✗</span>
+          </li>
+          <li class="comparison-item">
+            <span class="feature-text">+20.000 Clientes Satisfechos</span>
+            <span class="cross-icon">✗</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- Sección de Resultados Actuales -->
+    <div class="results-section">
+      <h3 class="results-title">Resultados Actuales</h3>
+      
+      <div class="results-grid">
+        <div class="result-item">
+          <div class="result-circle">
+            <span class="result-percentage">100%</span>
+          </div>
+          <div class="result-text">Satisfacción de los Clientes</div>
+        </div>
+        
+        <div class="result-item">
+          <div class="result-circle">
+            <span class="result-percentage">100%</span>
+          </div>
+          <div class="result-text">Rapidez y Seguridad de los Envíos</div>
+        </div>
+        
+        <div class="result-item">
+          <div class="result-circle">
+            <span class="result-percentage">100%</span>
+          </div>
+          <div class="result-text">Pagamentos de Aduanas</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
