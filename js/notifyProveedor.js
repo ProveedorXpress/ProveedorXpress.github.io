@@ -1,5 +1,5 @@
 export async function notificarProveedor({ productoId, productoNombre, clienteNombre, clienteEmail }) {
-  const backendUrl = 'https://mi-backend.onrender.com/notificar'; // <-- Cambia a tu URL real
+  const backendUrl = 'https://proveedorxpress-backend-1.onrender.com'; // <-- Cambia a tu URL real
 
   try {
     const res = await fetch(backendUrl, {
