@@ -1,30 +1,21 @@
 export async function notificarProveedor({ productoId, productoNombre, clienteNombre, clienteEmail }) {
-  const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbztlW5uaCeAfNn4Nz5k55VOO7-aYvcr1hA91aEvfBQRdBX4C9t8xRfy7n-VGPWsGhSKFA/exec';
-
-  const datos = {
-    productoId,
-    productoNombre,
-    clienteNombre,
-    clienteEmail
-  };
+  const backendUrl = 'https://mi-backend.onrender.com/notificar'; // <-- Cambia a tu URL real
 
   try {
-    const res = await fetch(googleScriptUrl, {
+    const res = await fetch(backendUrl, {
       method: 'POST',
-      body: JSON.stringify(datos),
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ productoId, productoNombre, clienteNombre, clienteEmail })
     });
 
     const json = await res.json();
 
     if (json.success) {
-      console.log('Email enviado correctamente al cliente.');
-    } else if (json.error) {
-      console.error('Error en Apps Script:', json.error);
+      console.log('Notificación enviada:', json.data);
     } else {
-      console.error('Respuesta inesperada:', json);
+      console.error('Error en backend:', json.error);
     }
   } catch (err) {
-    console.error('Error al contactar al script:', err);
+    console.error('Error al llamar backend:', err);
   }
 }
