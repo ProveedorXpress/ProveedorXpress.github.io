@@ -1,5 +1,5 @@
 export async function notificarProveedor({ productoId, productoNombre, clienteNombre, clienteEmail }) {
-  const googleScriptUrl = 'TU_URL_DE_GOOGLE_SCRIPT_PUBLICADA';
+  const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbztlW5uaCeAfNn4Nz5k55VOO7-aYvcr1hA91aEvfBQRdBX4C9t8xRfy7n-VGPWsGhSKFA/exec';
 
   const datos = {
     productoId,
