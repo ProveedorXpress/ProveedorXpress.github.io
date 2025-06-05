@@ -10,8 +10,8 @@
   <link rel="stylesheet" href="./css/comparison.css" />
   <link rel="stylesheet" href="./css/cookies.css" />
   <link rel="stylesheet" href="./css/reviews.css" />
+  <link rel="stylesheet" href="./css/product-modal.css" />
   <link rel="icon" href="./assets/a.png" type="image/png" />
-
 </head>
 <body>
   <!-- Modal de cookies/términos -->
@@ -46,23 +46,35 @@
   <p id="subtitle">Consigue los datos de contacto de los proveedores más confiables de tu sector. Servicio rápido y seguro.</p>
   
   <main id="productos">
-    <!-- Se inyectan 12 proveedores + 2 packs -->
+    <!-- Se inyectan los productos -->
   </main>
   
-  <button id="btnCarrito" aria-label="Abrir carrito">🛒 Carrito</button>
-  
-  <aside id="carrito" aria-label="Carrito de compras" role="region" aria-live="polite">
-    <header>
-      <h3>Tu carrito</h3>
-      <button class="cerrar" id="cerrarCarrito" aria-label="Cerrar carrito">&times;</button>
-    </header>
-    <ul id="listaCarrito"></ul>
-    <div class="total" id="total">Total: 0$</div>
-    <!-- Scrollable container para PayPal -->
-    <div class="paypal-container">
-      <div class="paypal-scroll" id="paypal-button-container"></div>
+  <!-- Modal de producto -->
+  <div id="productModal" class="product-modal">
+    <div class="product-modal-content">
+      <button class="modal-close" id="closeModal">&times;</button>
+      
+      <div class="modal-body">
+        <div class="modal-image">
+          <img id="modalImage" src="" alt="" />
+        </div>
+        
+        <div class="modal-info">
+          <h3 class="modal-title" id="modalTitle"></h3>
+          <div class="modal-description" id="modalDescription"></div>
+          <div class="modal-price">
+            <span class="tachado" id="modalOrigPrice"></span>
+            <span class="nuevo" id="modalSalePrice"></span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="modal-paypal-container">
+        <h4 class="modal-paypal-title">Comprar ahora con PayPal</h4>
+        <div id="modal-paypal-button-container"></div>
+      </div>
     </div>
-  </aside>
+  </div>
   
   <!-- Sección de comparación -->
   <section class="comparison-section">
@@ -148,55 +160,7 @@
   <p id="copy">© ProveedorXpress 2025. Todos los derechos reservados.</p>
   
   <script src="https://www.paypal.com/sdk/js?client-id=AaB66xFftPZMR4JyEunStmiuR-TmzvIQPmM12pKow5BdeKCrPrpQz5U919rhC7ea7zmFn5c-c0GW5Dhx&currency=EUR"></script>
-  <script src="./js/app.js"></script>
-  
-  <script>
-    // JavaScript para el modal de términos y cookies
-    document.addEventListener('DOMContentLoaded', function() {
-      const overlay = document.getElementById('cookieOverlay');
-      const checkbox = document.getElementById('acceptTerms');
-      const acceptBtn = document.getElementById('acceptBtn');
-      const declineBtn = document.getElementById('declineBtn');
-      
-      // Verificar si ya se aceptaron los términos
-      if (localStorage.getItem('termsAccepted') === 'true') {
-        overlay.style.display = 'none';
-      }
-      
-      // Habilitar/deshabilitar botón según checkbox
-      checkbox.addEventListener('change', function() {
-        acceptBtn.disabled = !checkbox.checked;
-      });
-      
-      // Aceptar términos
-      acceptBtn.addEventListener('click', function() {
-        if (checkbox.checked) {
-          localStorage.setItem('termsAccepted', 'true');
-          overlay.style.display = 'none';
-        }
-      });
-      
-      // Rechazar términos
-      declineBtn.addEventListener('click', function() {
-        alert('Debes aceptar los términos para continuar usando el sitio web.');
-        window.location.href = 'https://www.google.com';
-      });
-
-      // Cargar la sección de reseñas desde archivo externo
-      loadReviews();
-    });
-
-    // Función para cargar las reseñas desde archivo externo
-    function loadReviews() {
-      fetch('./components/reviews.html')
-        .then(response => response.text())
-        .then(html => {
-          document.getElementById('reviews-container').innerHTML = html;
-        })
-        .catch(error => {
-          console.error('Error cargando las reseñas:', error);
-        });
-    }
-  </script>
+  <script src="./js/product-modal.js"></script>
+  <script src="./js/cookies.js"></script>
 </body>
 </html>
