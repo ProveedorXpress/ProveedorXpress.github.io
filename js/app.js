@@ -12,7 +12,7 @@ const productos = [
     { id:'perfumes', nombre:'Proveedor perfumes', img:'assets/perfumes.jpg', precioOrig:19.99, precioSale:9.99 },
     { id:'pack-completo', nombre:'Pack completo de todos los proveedores', img:'assets/pack.jpg', precioOrig:99.99, precioSale:50 },
     { id:'pack-aleatorio', nombre:'Pack aleatorio de varios proveedores', img:'assets/aleatorios.jpg', precioOrig:39.99, precioSale:19.99 },
-    { id:'PRUEBA', nombre:'Pack aleatorio de varios proveedores', img:'assets/aleatorios.jpg', precioOrig:0, precioSale:0 }
+    { id:'PRUEBA', nombre:'Pack aleatorio de varios proveedores', img:'assets/aleatorios.jpg', precioOrig:5, precioSale:1 }
 ];
 
 const productosContainer = document.getElementById('productos');
