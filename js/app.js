@@ -11,9 +11,9 @@ const productos = [
   { id: 'tickets', nombre: 'Tickets', img: 'assets/tickets.jpg', precioOrig: 19.99, precioSale: 9.99 },
   { id: 'perfumes', nombre: 'Proveedor perfumes', img: 'assets/perfumes.jpg', precioOrig: 19.99, precioSale: 9.99 },
   { id: 'Iphones', nombre: 'Proveedor iPhone 15/16 Pro Max', img: 'assets/Iphones.jpg', precioOrig: 10, precioSale: 9.99 },
-  { id: 'Denim Tears:', nombre: 'Proveedor Denim Tears:', img: 'assets/Iphones.jpg', precioOrig: 10, precioSale: 9.99 },
-  { id: 'Pulsera LV', nombre: 'Proveedor Pulsera LV', img: 'assets/Iphones.jpg', precioOrig: 10, precioSale: 9.99 },
-  { id: 'JOYAS CON DIAMANTE (MOISSANITE)', nombre: 'Proveedor JOYAS CON DIAMANTE (MOISSANITE)', img: 'assets/Iphones.jpg', precioOrig: 10, precioSale: 9.99 },
+  { id: 'DenimTears:', nombre: 'Proveedor Denim Tears:', img: 'assets/Iphones.jpg', precioOrig: 10, precioSale: 9.99 },
+  { id: 'PulseraLV', nombre: 'Proveedor Pulsera LV', img: 'assets/Iphones.jpg', precioOrig: 10, precioSale: 9.99 },
+  { id: 'JOYASCONDIAMANTEMOISSANITE', nombre: 'Proveedor JOYAS CON DIAMANTE (MOISSANITE)', img: 'assets/Iphones.jpg', precioOrig: 10, precioSale: 9.99 },
   { id: 'pack-completo', nombre: 'Pack completo de todos los proveedores', img: 'assets/pack.jpg', precioOrig: 99.99, precioSale: 50 },
   { id: 'pack-aleatorio', nombre: 'Pack aleatorio de varios proveedores', img: 'assets/aleatorios.jpg', precioOrig: 39.99, precioSale: 19.99 },
   { id: 'PRUEBA', nombre: 'Pack aleatorio de varios proveedores', img: 'assets/aleatorios.jpg', precioOrig: 5, precioSale: 1 }
