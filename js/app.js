@@ -14,10 +14,11 @@ const productos = [
   { id: 'Bolsos', nombre: 'Proveedor Bolsos LV', img: 'assets/bolsosLV.jpg', precioOrig: 20, precioSale: 13.99 },
   { id: 'DenimTears', nombre: 'Proveedor Denim Tears:', img: 'assets/DenimTears.jpg', precioOrig: 10, precioSale: 9.99 },
   { id: 'PulseraLV', nombre: 'Proveedor Pulsera LV', img: 'assets/PulseraLV.jpg', precioOrig: 10, precioSale: 9.99 },
+  { id: 'Sp5der', nombre: 'Proveedor Sp5der', img: 'assets/Sp5ader.jpg', precioOrig: 10, precioSale: 9.99 },
   { id: 'JOYASCONDIAMANTEMOISSANITE', nombre: 'Proveedor JOYAS CON DIAMANTE (MOISSANITE)', img: 'assets/JOYASCONDIAMANTEMOISSANITE.jpg', precioOrig: 10, precioSale: 9.99 },
   { id: 'pack-completo', nombre: 'Pack completo de todos los proveedores', img: 'assets/pack.jpg', precioOrig: 99.99, precioSale: 50 },
   { id: 'pack-aleatorio', nombre: 'Pack aleatorio de varios proveedores', img: 'assets/aleatorios.jpg', precioOrig: 39.99, precioSale: 19.99 },
-  { id: 'PRUEBA', nombre: 'Pack aleatorio de varios proveedores', img: 'assets/aleatorios.jpg', precioOrig: 5, precioSale: 1 }
+  { id: 'PRUEBA', nombre: 'Pack aleatorio de varios proveedores', img: 'assets/PackRND.jpg', precioOrig: 5, precioSale: 1 }
 
 ];
 
