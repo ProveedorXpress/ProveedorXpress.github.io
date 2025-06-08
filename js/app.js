@@ -18,7 +18,7 @@ const productos = [
   { id: 'JOYASCONDIAMANTEMOISSANITE', nombre: 'Proveedor JOYAS CON DIAMANTE (MOISSANITE)', img: 'assets/JOYASCONDIAMANTEMOISSANITE.jpg', precioOrig: 10, precioSale: 9.99 },
   { id: 'pack-completo', nombre: 'Pack completo de todos los proveedores', img: 'assets/pack.jpg', precioOrig: 99.99, precioSale: 50 },
   { id: 'pack-aleatorio', nombre: 'Pack aleatorio de varios proveedores', img: 'assets/PackRND.jpg', precioOrig: 39.99, precioSale: 19.99 },
-  { id: 'PRUEBA', nombre: 'PRUEBA', img: 'assets/PackRND.jpg', precioOrig: 5, precioSale: 1 }
+  { id: 'PRUEBA', nombre: 'PRUEBA', img: 'assets/nada.jpg', precioOrig: 5, precioSale: 1 }
 
 ];
 
