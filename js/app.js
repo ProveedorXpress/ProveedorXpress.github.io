@@ -19,308 +19,31 @@ const productos = [
   { id: 'pack-completo', nombre: 'Pack completo de todos los proveedores', img: 'assets/pack.jpg', precioOrig: 99.99, precioSale: 50 },
   { id: 'pack-aleatorio', nombre: 'Pack aleatorio de varios proveedores', img: 'assets/PackRND.jpg', precioOrig: 39.99, precioSale: 19.99 },
   { id: 'PRUEBA', nombre: 'PRUEBA', img: 'assets/nada.jpg', precioOrig: 5, precioSale: 1 }
-
 ];
 
-const productosContainer = document.getElementById('productos');
-const carritoBtn = document.getElementById('btnCarrito');
-const carrito = document.getElementById('carrito');
-const cerrarCarrito = document.getElementById('cerrarCarrito');
-const listaCarrito = document.getElementById('listaCarrito');
-const totalSpan = document.getElementById('total');
-let carritoItems = {};
-
-// Renderizar productos
-productos.forEach(p => {
-  const art = document.createElement('article');
-  art.className = 'producto';
-  art.dataset.id = p.id;
-  art.innerHTML = `
-    <img src="${p.img}" alt="${p.nombre}">
-    <h2>${p.nombre}</h2>
-    <div class="precio">
-      <span class="tachado">${p.precioOrig}$</span>
-      <span class="nuevo">${p.precioSale}$</span>
-    </div>
-    <button class="agregar">Añadir al carrito</button>
-  `;
-  productosContainer.appendChild(art);
-});
-
-// Eventos del carrito
-if (carritoBtn && cerrarCarrito && carrito) {
-  carritoBtn.addEventListener('click', () => carrito.classList.add('visible'));
-  cerrarCarrito.addEventListener('click', () => carrito.classList.remove('visible'));
-}
-
-// Añadir al carrito
-document.querySelectorAll('button.agregar').forEach(btn => {
-  btn.addEventListener('click', e => {
-    const art = e.target.closest('article');
-    const id = art.dataset.id;
-    const prod = productos.find(x => x.id === id);
-    if (!carritoItems[id]) {
-      carritoItems[id] = { nombre: prod.nombre, precio: prod.precioSale, cantidad: 1 };
-    } else {
-      carritoItems[id].cantidad++;
-    }
-    renderCarrito();
-    carrito.classList.add('visible');
-  });
-});
-
-// Renderizar carrito
-function renderCarrito() {
-  listaCarrito.innerHTML = '';
-  let total = 0;
-  Object.keys(carritoItems).forEach(id => {
-    const item = carritoItems[id];
-    total += item.precio * item.cantidad;
-    const li = document.createElement('li');
-    li.innerHTML = `
-      <span class="nombre">${item.nombre}</span>
-      <input type="number" class="cantidad" min="1" value="${item.cantidad}" data-id="${id}">
-      <span class="precio">${(item.precio * item.cantidad).toFixed(2)}$</span>
-      <button class="eliminar" data-id="${id}">&times;</button>
-    `;
-    listaCarrito.appendChild(li);
-
-    li.querySelector('input.cantidad').addEventListener('change', e => {
-      let val = parseInt(e.target.value);
-      if (isNaN(val) || val < 1) val = 1;
-      carritoItems[id].cantidad = val;
-      renderCarrito();
-    });
-
-    li.querySelector('button.eliminar').addEventListener('click', () => {
-      delete carritoItems[id];
-      renderCarrito();
-    });
-  });
-  totalSpan.textContent = `Total: ${total.toFixed(2)}€`;
-  renderPayPalButton(total);
-}
-
-// PayPal seguro
-function renderPayPalButton(total) {
-  document.getElementById('paypal-button-container')?.remove();
-  const container = document.createElement('div');
-  container.id = 'paypal-button-container';
-  container.style.marginTop = 'auto';
-  carrito.appendChild(container);
-
-  paypal.Buttons({
-    style: { layout: 'vertical', color: 'gold' },
-    createOrder: function (data, actions) {
-      const idsProveedores = Object.keys(carritoItems).join(',');
-      return actions.order.create({
-        purchase_units: [{
-          amount: { currency_code: 'EUR', value: total.toFixed(2) },
-          custom_id: idsProveedores
-        }]
-      });
-    },
-    onApprove: async function (data, actions) {
-      try {
-        const details = await actions.order.capture();
-        const email = prompt("Ingresa tu email para recibir los contactos:");
-
-        if (email) {
-          const body = JSON.stringify({
-            custom_id: Object.keys(carritoItems).join(','),
-            payer_email: email
-          });
-
-          const res = await fetch("https://TU_BACKEND_ON_RENDER/paypal-webhook", {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body
-          });
-
-          if (res.ok) {
-            alert(`¡Gracias por tu compra! Los contactos se enviarán a ${email}.`);
-          } else {
-            alert("Error al enviar los contactos. Contacta con soporte.");
-          }
-        }
-
-        carritoItems = {};
-        renderCarrito();
-        carrito.classList.remove('visible');
-      } catch (err) {
-        console.error("Error en pago:", err);
-        alert("Error al completar el pago.");
-      }
-    },
-    onError: err => {
-      console.error(err);
-      alert("Error al cargar el botón de PayPal.");
-    }
-  }).render('#paypal-button-container');
-}
-
-renderCarrito();
-// ...Tu código existente...
-
-// Renderizar productos (añadimos un contenedor para el botón PayPal individual)
-productos.forEach(p => {
-  const art = document.createElement('article');
-  art.className = 'producto';
-  art.dataset.id = p.id;
-  art.innerHTML = `
-    <img src="${p.img}" alt="${p.nombre}">
-    <h2>${p.nombre}</h2>
-    <div class="precio">
-      <span class="tachado">${p.precioOrig}$</span>
-      <span class="nuevo">${p.precioSale}$</span>
-    </div>
-    <button class="agregar">Añadir al carrito</button>
-    <div class="paypal-individual" id="paypal-individual-${p.id}"></div>
-  `;
-  productosContainer.appendChild(art);
-});
-// Suponiendo que tienes un array de productos/proveedores llamado "productos"
-const productos = [
-  {
-    id: "1",
-    nombre: "PACK PROVEEDORES",
-    precioOrig: 79.00,
-    precioSale: 39.00,
-    descripcion: "Consigue los datos de los proveedores más confiables de tu sector.",
-    img: "./assets/pack-proveedores.png",
-    testimonios: [
-      {
-        texto: "Sinceramente estaba cagado porque pensaba que era una estafa pero me ha llegado al instante con todo muy bien explicado",
-        autor: "Pablo García",
-        estrellas: 5
-      }
-    ]
-  },
-  // ... agrega aquí todos tus proveedores con sus datos, imagen, etc.
-];
-
-// Renderizar la lista de proveedores (en <main id="proveedores">)
+// Renderizar productos (solo una vez, sin duplicar)
 function renderProductos() {
-  const main = document.getElementById('proveedores');
-  main.innerHTML = ""; // Limpiar antes
-  productos.forEach(prod => {
+  const productosContainer = document.getElementById('productos');
+  productosContainer.innerHTML = "";
+  productos.forEach(p => {
     const art = document.createElement('article');
-    art.className = 'proveedor-mini';
+    art.className = 'producto';
+    art.dataset.id = p.id;
     art.innerHTML = `
-      <img src="${prod.img}" alt="${prod.nombre}">
-      <h2>${prod.nombre}</h2>
-      <div class="precio">${prod.precioSale.toFixed(2)}€</div>
-      <button class="agregar" data-id="${prod.id}">Agregar al carrito</button>
+      <img src="${p.img}" alt="${p.nombre}">
+      <h2>${p.nombre}</h2>
+      <div class="precio">
+        <span class="tachado">${p.precioOrig}€</span>
+        <span class="nuevo">${p.precioSale}€</span>
+      </div>
+      <button class="agregar" data-id="${p.id}">Agregar al carrito</button>
     `;
-    main.appendChild(art);
+    productosContainer.appendChild(art);
   });
 }
 renderProductos();
 
-// Modal para todos los proveedores
-function abrirModalProveedor(prod, cantidad = 1) {
-  const modal = document.getElementById('modalProveedor');
-  modal.innerHTML = `
-    <div class="modal-content">
-      <button class="cerrar-modal" id="cerrarModal">&times;</button>
-      <div class="modal-flex">
-        <div class="modal-img">
-          <img src="${prod.img}" alt="${prod.nombre}">
-        </div>
-        <div class="modal-info">
-          <h2>${prod.nombre}</h2>
-          <div>
-            <span class="estrellas">★★★★★</span> <span style="color:#888;">(+6700 Reseñas)</span>
-          </div>
-          <div>
-            <span class="precio-nueva">${prod.precioSale.toFixed(2)}€</span>
-            <span class="precio-original">${prod.precioOrig.toFixed(2)}€</span>
-            <span class="descuento">AHORRA ${Math.round(100-(prod.precioSale/prod.precioOrig*100))}%</span>
-          </div>
-          <div class="cantidad-box">
-            <button id="restarCantidad">-</button>
-            <span id="cantidadSpan">${cantidad}</span>
-            <button id="sumarCantidad">+</button>
-            <span class="mini">(Cantidad)</span>
-          </div>
-          <div class="info-instantaneo">⚡ Información enviada al instante.</div>
-          <div id="paypal-modal-btn"></div>
-          ${prod.testimonios && prod.testimonios.length > 0 ? `
-            <div class="testimonios">
-              <div class="testimonio">
-                <p>“${prod.testimonios[0].texto}”</p>
-                <span class="autor">${prod.testimonios[0].autor} ⭐⭐⭐⭐⭐</span>
-              </div>
-            </div>
-          ` : ""}
-        </div>
-      </div>
-    </div>
-  `;
-  modal.classList.remove('oculto');
-
-  // Cantidad
-  let cantidadActual = cantidad;
-  const span = modal.querySelector("#cantidadSpan");
-  modal.querySelector("#sumarCantidad").onclick = () => {
-    cantidadActual++;
-    span.textContent = cantidadActual;
-    renderPayPalBtn(prod, cantidadActual);
-  };
-  modal.querySelector("#restarCantidad").onclick = () => {
-    if (cantidadActual > 1) {
-      cantidadActual--;
-      span.textContent = cantidadActual;
-      renderPayPalBtn(prod, cantidadActual);
-    }
-  };
-
-  // Renderizar el botón de PayPal para ese proveedor y cantidad
-  renderPayPalBtn(prod, cantidadActual);
-
-  // Cerrar modal
-  modal.querySelector("#cerrarModal").onclick = () => {
-    modal.classList.add('oculto');
-    modal.innerHTML = "";
-  };
-}
-
-function renderPayPalBtn(prod, cantidad) {
-  const cont = document.getElementById('paypal-modal-btn');
-  cont.innerHTML = ""; // Limpia btn anterior si existe
-  if (window.paypal) {
-    paypal.Buttons({
-      style: { layout: 'vertical', color: 'gold' },
-      createOrder: function(data, actions) {
-        return actions.order.create({
-          purchase_units: [{
-            amount: { currency_code: 'EUR', value: (prod.precioSale * cantidad).toFixed(2) },
-            custom_id: `[${prod.nombre}] Cantidad:${cantidad}`
-          }]
-        });
-      },
-      onApprove: async function(data, actions) {
-        const details = await actions.order.capture();
-        alert(`¡Gracias por tu compra de ${prod.nombre}!`);
-        // Aquí puedes mostrar la info de contacto, enviar email, etc.
-      },
-      onError: err => {
-        alert("Error al procesar el pago con PayPal.");
-        console.error(err);
-      }
-    }).render('#paypal-modal-btn');
-  }
-}
-
-// Listener para abrir modal al hacer click en “Agregar”
-document.getElementById('proveedores').addEventListener('click', e => {
-  if (e.target.classList.contains('agregar')) {
-    const id = e.target.dataset.id;
-    const prod = productos.find(p => p.id === id);
-    if (prod) abrirModalProveedor(prod);
-  }
-});
-// MODAL DINÁMICO para ficha individual de proveedor
+// Modal dinámico FICHA de proveedor
 function abrirModalProveedor(prod, cantidad = 1) {
   const modal = document.getElementById('modalProveedor');
   modal.innerHTML = `
@@ -403,7 +126,7 @@ function renderPayPalBtn(prod, cantidad) {
   }
 }
 
-// Listener para abrir modal al hacer click en “Agregar al carrito”
+// Listener: abrir modal ficha al hacer click en “Agregar al carrito”
 document.getElementById('productos').addEventListener('click', e => {
   if (e.target.classList.contains('agregar')) {
     const id = e.target.dataset.id;
