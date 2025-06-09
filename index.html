@@ -12,6 +12,342 @@
   <link rel="stylesheet" href="./css/comparison.css" />
   <link rel="stylesheet" href="./css/Animacion título.css" />
   <link rel="icon" href="./assets/a.png" type="image/png" />
+  
+  <style>
+    /* Estilos básicos para que funcione sin CSS externos */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+    
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    
+    #subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 30px;
+    }
+    
+    #productos {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .producto {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    
+    .producto img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+    
+    .producto h2 {
+      color: #333;
+      margin: 10px 0;
+      font-size: 1.2em;
+    }
+    
+    .precio {
+      margin: 15px 0;
+    }
+    
+    .tachado {
+      text-decoration: line-through;
+      color: #999;
+      margin-right: 10px;
+    }
+    
+    .nuevo {
+      color: #e74c3c;
+      font-weight: bold;
+      font-size: 1.3em;
+    }
+    
+    .agregar {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.3s;
+    }
+    
+    .agregar:hover {
+      background: #2980b9;
+    }
+    
+    /* Modal styles */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    .modal-overlay.activo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 1;
+    }
+    
+    .modal-content {
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      max-width: 800px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+    }
+    
+    .cerrar-modal {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 30px;
+      cursor: pointer;
+      color: #999;
+    }
+    
+    .modal-flex {
+      display: flex;
+      gap: 30px;
+      align-items: flex-start;
+    }
+    
+    .modal-img {
+      flex: 1;
+    }
+    
+    .modal-img img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    
+    .modal-info {
+      flex: 1;
+    }
+    
+    .precio-modal {
+      margin: 20px 0;
+    }
+    
+    .precio-nueva {
+      font-size: 2em;
+      color: #e74c3c;
+      font-weight: bold;
+      margin-right: 15px;
+    }
+    
+    .precio-original {
+      text-decoration: line-through;
+      color: #999;
+      margin-right: 10px;
+    }
+    
+    .descuento {
+      background: #e74c3c;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 0.9em;
+    }
+    
+    .customer-info {
+      margin: 25px 0;
+    }
+    
+    .customer-info h4 {
+      margin-bottom: 10px;
+      color: #333;
+    }
+    
+    #customerEmail {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+    
+    .cantidad-box {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin: 20px 0;
+    }
+    
+    .cantidad-btn {
+      background: #3498db;
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2em;
+    }
+    
+    .cantidad-display {
+      font-size: 1.5em;
+      font-weight: bold;
+      min-width: 30px;
+      text-align: center;
+    }
+    
+    .info-instantaneo {
+      background: #2ecc71;
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      text-align: center;
+      margin: 20px 0;
+    }
+    
+    /* Cookie Modal */
+    .cookie-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .cookie-modal {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      max-width: 600px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    
+    .terms-list {
+      text-align: left;
+      margin: 20px 0;
+    }
+    
+    .terms-list li {
+      margin: 10px 0;
+      padding-left: 10px;
+    }
+    
+    .highlight {
+      font-weight: bold;
+      color: #e74c3c;
+    }
+    
+    .checkbox-container {
+      margin: 20px 0;
+      text-align: center;
+    }
+    
+    .cookie-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+    }
+    
+    .btn-accept, .btn-decline {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+    
+    .btn-accept {
+      background: #95a5a6;
+      color: white;
+    }
+    
+    .btn-accept:not(:disabled) {
+      background: #27ae60;
+    }
+    
+    .btn-decline {
+      background: #e74c3c;
+      color: white;
+    }
+    
+    /* Confirmación */
+    .confirmacion {
+      text-align: center;
+    }
+    
+    .checkmark {
+      margin: 20px 0;
+    }
+    
+    .confirmacion-detalles {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+      text-align: left;
+    }
+    
+    .info-envio {
+      background: #d4edda;
+      padding: 15px;
+      border-radius: 10px;
+      margin: 20px 0;
+    }
+    
+    .btn-cerrar {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+    
+    @media (max-width: 768px) {
+      .modal-flex {
+        flex-direction: column;
+      }
+      
+      #productos {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
   <!-- Modal de cookies/términos -->
@@ -54,55 +390,271 @@
     <!-- Se inyectan los productos -->
   </main>
 
+  <!-- PayPal SDK -->
   <script src="https://www.paypal.com/sdk/js?client-id=AaB66xFftPZMR4JyEunStmiuR-TmzvIQPmM12pKow5BdeKCrPrpQz5U919rhC7ea7zmFn5c-c0GW5Dhx&currency=EUR"></script>
-  <script src="./js/app.js"></script>
   
   <script>
-    // JavaScript para el modal de términos y cookies (CORREGIDO)
+    // Array de productos
+    const productos = [
+      { id: 'ropa', nombre: 'Proveedor de ropa', img: 'assets/ropa.jpg', precioOrig: 19.99, precioSale: 9.99 },
+      { id: 'vapers', nombre: 'Proveedor vapers', img: 'assets/vapers.jpg', precioOrig: 19.99, precioSale: 9.99 },
+      { id: 'zapas', nombre: 'Proveedor zapas', img: 'assets/zapas.jpg', precioOrig: 19.99, precioSale: 9.99 },
+      { id: 'vintage', nombre: 'Proveedor ropa vintage', img: 'assets/ropa_vintage.jpg', precioOrig: 19.99, precioSale: 9.99 },
+      { id: 'facturas', nombre: 'Proveedor facturas editables', img: 'assets/facturas.jpg', precioOrig: 19.99, precioSale: 9.99 },
+      { id: 'futbol', nombre: 'Proveedor fútbol', img: 'assets/futbol.jpg', precioOrig: 19.99, precioSale: 9.99 },
+      { id: 'relojes', nombre: 'Proveedor relojes', img: 'assets/relojes.jpg', precioOrig: 19.99, precioSale: 9.99 },
+      { id: 'accesorios', nombre: 'Proveedor accesorios', img: 'assets/accesorios.jpg', precioOrig: 19.99, precioSale: 9.99 },
+      { id: 'electronica', nombre: 'Proveedor electrónica', img: 'assets/electronica.jpg', precioOrig: 19.99, precioSale: 9.99 },
+      { id: 'tickets', nombre: 'Tickets', img: 'assets/tickets.jpg', precioOrig: 19.99, precioSale: 9.99 },
+      { id: 'perfumes', nombre: 'Proveedor perfumes', img: 'assets/perfumes.jpg', precioOrig: 19.99, precioSale: 9.99 },
+      { id: 'Iphones', nombre: 'Proveedor iPhone 15/16 Pro Max', img: 'assets/Iphones.jpg', precioOrig: 10, precioSale: 9.99 },
+      { id: 'Bolsos', nombre: 'Proveedor Bolsos LV', img: 'assets/bolsosLV.jpg', precioOrig: 20, precioSale: 13.99 },
+      { id: 'DenimTears', nombre: 'Proveedor Denim Tears:', img: 'assets/DenimTears.jpg', precioOrig: 10, precioSale: 9.99 },
+      { id: 'PulseraLV', nombre: 'Proveedor Pulsera LV', img: 'assets/PulseraLV.jpg', precioOrig: 10, precioSale: 9.99 },
+      { id: 'Sp5der', nombre: 'Proveedor Sp5der', img: 'assets/Sp5der.jpg', precioOrig: 10, precioSale: 9.99 },
+      { id: 'JOYASCONDIAMANTEMOISSANITE', nombre: 'Proveedor JOYAS CON DIAMANTE (MOISSANITE)', img: 'assets/JOYASCONDIAMANTEMOISSANITE.jpg', precioOrig: 10, precioSale: 9.99 },
+      { id: 'pack-completo', nombre: 'Pack completo de todos los proveedores', img: 'assets/pack.jpg', precioOrig: 99.99, precioSale: 50 },
+      { id: 'pack-aleatorio', nombre: 'Pack aleatorio de varios proveedores', img: 'assets/PackRND.jpg', precioOrig: 39.99, precioSale: 19.99 },
+      { id: 'PRUEBA', nombre: 'PRUEBA', img: 'assets/nada.jpg', precioOrig: 5, precioSale: 1 }
+    ];
+
+    // Variables globales
+    let currentOrder = null;
+
+    // Función para renderizar productos
+    function renderProductos() {
+      const productosContainer = document.getElementById('productos');
+      productosContainer.innerHTML = "";
+      
+      productos.forEach(p => {
+        const art = document.createElement('article');
+        art.className = 'producto';
+        art.dataset.id = p.id;
+        art.innerHTML = `
+          <img src="${p.img}" alt="${p.nombre}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlbiBubyBkaXNwb25pYmxlPC90ZXh0Pjwvc3ZnPg=='">
+          <h2>${p.nombre}</h2>
+          <div class="precio">
+            <span class="tachado">${p.precioOrig}€</span>
+            <span class="nuevo">${p.precioSale}€</span>
+          </div>
+          <button class="agregar" data-id="${p.id}">Agregar al carrito</button>
+        `;
+        productosContainer.appendChild(art);
+      });
+    }
+
+    // Función para abrir modal del proveedor
+    function abrirModalProveedor(prod, cantidad = 1) {
+      const modal = document.getElementById('modalProveedor');
+      modal.innerHTML = `
+        <div class="modal-content">
+          <button class="cerrar-modal" onclick="cerrarModal()">&times;</button>
+          <div class="modal-flex">
+            <div class="modal-img">
+              <img src="${prod.img}" alt="${prod.nombre}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlbiBubyBkaXNwb25pYmxlPC90ZXh0Pjwvc3ZnPg=='>
+            </div>
+            <div class="modal-info">
+              <h2>${prod.nombre}</h2>
+              <div class="precio-modal">
+                <span class="precio-nueva">${prod.precioSale.toFixed(2)}€</span>
+                <span class="precio-original">${prod.precioOrig.toFixed(2)}€</span>
+                <span class="descuento">AHORRA ${Math.round(100 - (prod.precioSale / prod.precioOrig) * 100)}%</span>
+              </div>
+              
+              <div class="customer-info">
+                <h4>📧 Tu email para recibir la información:</h4>
+                <input type="email" id="customerEmail" placeholder="tu-email@ejemplo.com" required>
+              </div>
+              
+              <div class="cantidad-box">
+                <button class="cantidad-btn" onclick="cambiarCantidad(-1)">-</button>
+                <span class="cantidad-display" id="cantidadSpan">${cantidad}</span>
+                <button class="cantidad-btn" onclick="cambiarCantidad(1)">+</button>
+                <span class="mini">(Cantidad)</span>
+              </div>
+              
+              <div class="info-instantaneo">⚡ Información enviada al instante</div>
+              <div id="paypal-modal-btn"></div>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      modal.classList.add('activo');
+      
+      // Configurar la cantidad actual
+      window.cantidadActual = cantidad;
+      window.productoActual = prod;
+      
+      // Renderizar PayPal
+      renderPayPalBtn();
+      
+      // Event listener para el email
+      document.getElementById('customerEmail').addEventListener('input', renderPayPalBtn);
+    }
+
+    // Función para cambiar cantidad
+    function cambiarCantidad(delta) {
+      window.cantidadActual = Math.max(1, window.cantidadActual + delta);
+      document.getElementById('cantidadSpan').textContent = window.cantidadActual;
+      renderPayPalBtn();
+    }
+
+    // Función para renderizar botón PayPal
+    function renderPayPalBtn() {
+      const cont = document.getElementById('paypal-modal-btn');
+      if (!cont) return;
+      
+      cont.innerHTML = "";
+      
+      if (window.paypal && window.productoActual) {
+        paypal.Buttons({
+          style: { 
+            layout: 'vertical', 
+            color: 'gold',
+            shape: 'rect',
+            label: 'pay'
+          },
+          createOrder: function(data, actions) {
+            const emailInput = document.getElementById('customerEmail');
+            const email = emailInput ? emailInput.value.trim() : '';
+            
+            if (!email || !email.includes('@')) {
+              alert('Por favor, introduce un email válido para recibir la información del proveedor.');
+              return Promise.reject(new Error('Email no válido'));
+            }
+
+            const prod = window.productoActual;
+            const cantidad = window.cantidadActual;
+
+            currentOrder = {
+              producto: prod.nombre,
+              producto_id: prod.id,
+              cantidad: cantidad,
+              email_cliente: email,
+              precio_unitario: prod.precioSale,
+              precio_total: (prod.precioSale * cantidad).toFixed(2),
+              fecha: new Date().toISOString()
+            };
+
+            return actions.order.create({
+              purchase_units: [{
+                amount: { 
+                  currency_code: 'EUR', 
+                  value: (prod.precioSale * cantidad).toFixed(2) 
+                },
+                description: `${prod.nombre} - Cantidad: ${cantidad}`
+              }]
+            });
+          },
+          onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+              console.log('Pago completado:', details);
+              mostrarConfirmacionPago(currentOrder);
+            });
+          },
+          onError: function(err) {
+            console.error('Error en el pago:', err);
+            alert('Hubo un error al procesar el pago. Por favor, inténtalo de nuevo.');
+          },
+          onCancel: function(data) {
+            console.log('Pago cancelado:', data);
+            alert('Pago cancelado. Puedes intentarlo de nuevo cuando quieras.');
+          }
+        }).render('#paypal-modal-btn');
+      }
+    }
+
+    // Función para mostrar confirmación
+    function mostrarConfirmacionPago(orderInfo) {
+      const modal = document.getElementById('modalProveedor');
+      modal.innerHTML = `
+        <div class="modal-content confirmacion">
+          <div class="checkmark">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="45" fill="#4CAF50"/>
+              <path d="M25 50 L40 65 L75 30" stroke="white" stroke-width="5" fill="none"/>
+            </svg>
+          </div>
+          <h2>¡Pago completado con éxito!</h2>
+          <div class="confirmacion-detalles">
+            <p><strong>Producto:</strong> ${orderInfo.producto}</p>
+            <p><strong>Cantidad:</strong> ${orderInfo.cantidad}</p>
+            <p><strong>Total:</strong> ${orderInfo.precio_total}€</p>
+            <p><strong>Email:</strong> ${orderInfo.email_cliente}</p>
+          </div>
+          <div class="info-envio">
+            <p>📧 La información del proveedor será enviada a tu email en los próximos minutos.</p>
+            <p>⚡ ¡Gracias por tu compra!</p>
+          </div>
+          <button class="btn-cerrar" onclick="cerrarModal()">Cerrar</button>
+        </div>
+      `;
+      
+      setTimeout(() => cerrarModal(), 5000);
+    }
+
+    // Función para cerrar modal
+    function cerrarModal() {
+      const modal = document.getElementById('modalProveedor');
+      modal.classList.remove('activo');
+      setTimeout(() => {
+        modal.innerHTML = "";
+      }, 300);
+    }
+
+    // Event listeners principales
     document.addEventListener('DOMContentLoaded', function() {
+      // Manejar términos y condiciones
       const overlay = document.getElementById('cookieOverlay');
       const checkbox = document.getElementById('acceptTerms');
       const acceptBtn = document.getElementById('acceptBtn');
       const declineBtn = document.getElementById('declineBtn');
       
       // Verificar si ya se aceptaron los términos
-      if (localStorage.getItem('termsAccepted') === 'true') {
+      const termsAccepted = sessionStorage.getItem('termsAccepted') === 'true';
+      if (termsAccepted) {
         overlay.style.display = 'none';
       }
       
-      // Habilitar/deshabilitar botón según checkbox - CORREGIDO
+      // Checkbox handler
       checkbox.addEventListener('change', function() {
-        if (checkbox.checked) {
-          acceptBtn.disabled = false;
-          acceptBtn.style.background = '#27ae60';
-          acceptBtn.style.cursor = 'pointer';
-        } else {
-          acceptBtn.disabled = true;
-          acceptBtn.style.background = '#95a5a6';
-          acceptBtn.style.cursor = 'not-allowed';
-        }
+        acceptBtn.disabled = !checkbox.checked;
       });
       
-      // Aceptar términos - CORREGIDO
-      acceptBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        console.log('Botón aceptar clickeado');
-        console.log('Checkbox checked:', checkbox.checked);
-        
+      // Botón aceptar
+      acceptBtn.addEventListener('click', function() {
         if (checkbox.checked) {
-          localStorage.setItem('termsAccepted', 'true');
+          sessionStorage.setItem('termsAccepted', 'true');
           overlay.style.display = 'none';
-          console.log('Términos aceptados y overlay ocultado');
-        } else {
-          alert('Debes marcar la casilla para aceptar los términos');
         }
       });
       
-      // Rechazar términos
-      declineBtn.addEventListener('click', function(e) {
-        e.preventDefault();
+      // Botón rechazar
+      declineBtn.addEventListener('click', function() {
         if (confirm('¿Estás seguro de que quieres salir?')) {
           window.location.href = 'https://www.google.com';
+        }
+      });
+
+      // Renderizar productos
+      renderProductos();
+      
+      // Event listener para botones de productos
+      document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('agregar')) {
+          const productId = e.target.dataset.id;
+          const producto = productos.find(p => p.id === productId);
+          if (producto) {
+            abrirModalProveedor(producto);
+          }
+        }
+      });
+
+      // Cerrar modal al hacer clic fuera
+      document.getElementById('modalProveedor').addEventListener('click', function(e) {
+        if (e.target === this) {
+          cerrarModal();
         }
       });
     });
