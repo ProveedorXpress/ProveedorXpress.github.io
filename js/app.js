@@ -160,3 +160,52 @@ function renderPayPalButton(total) {
 }
 
 renderCarrito();
+// ...Tu código existente...
+
+// Renderizar productos (añadimos un contenedor para el botón PayPal individual)
+productos.forEach(p => {
+  const art = document.createElement('article');
+  art.className = 'producto';
+  art.dataset.id = p.id;
+  art.innerHTML = `
+    <img src="${p.img}" alt="${p.nombre}">
+    <h2>${p.nombre}</h2>
+    <div class="precio">
+      <span class="tachado">${p.precioOrig}$</span>
+      <span class="nuevo">${p.precioSale}$</span>
+    </div>
+    <button class="agregar">Añadir al carrito</button>
+    <div class="paypal-individual" id="paypal-individual-${p.id}"></div>
+  `;
+  productosContainer.appendChild(art);
+});
+
+// ...Todo tu código de carrito y PayPal del carrito sigue igual...
+
+// Al final del archivo, después de renderizar los productos
+document.addEventListener('DOMContentLoaded', () => {
+  productos.forEach(p => {
+    if (window.paypal) {
+      paypal.Buttons({
+        style: { layout: 'vertical', color: 'gold', height: 35, label: 'pay' },
+        createOrder: function (data, actions) {
+          return actions.order.create({
+            purchase_units: [{
+              amount: { currency_code: 'EUR', value: p.precioSale.toFixed(2) },
+              custom_id: p.nombre // Campo oculto con el nombre del proveedor
+            }]
+          });
+        },
+        onApprove: async function (data, actions) {
+          const details = await actions.order.capture();
+          alert(`¡Gracias por tu compra a ${p.nombre}!`);
+          // Aquí puedes añadir lógica para enviar el contacto, email, etc.
+        },
+        onError: err => {
+          alert("Error al procesar el pago de este proveedor.");
+          console.error(err);
+        }
+      }).render(`#paypal-individual-${p.id}`);
+    }
+  });
+});
