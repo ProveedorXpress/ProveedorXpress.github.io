@@ -179,33 +179,144 @@ productos.forEach(p => {
   `;
   productosContainer.appendChild(art);
 });
+// Suponiendo que tienes un array de productos/proveedores llamado "productos"
+const productos = [
+  {
+    id: "1",
+    nombre: "PACK PROVEEDORES",
+    precioOrig: 79.00,
+    precioSale: 39.00,
+    descripcion: "Consigue los datos de los proveedores más confiables de tu sector.",
+    img: "./assets/pack-proveedores.png",
+    testimonios: [
+      {
+        texto: "Sinceramente estaba cagado porque pensaba que era una estafa pero me ha llegado al instante con todo muy bien explicado",
+        autor: "Pablo García",
+        estrellas: 5
+      }
+    ]
+  },
+  // ... agrega aquí todos tus proveedores con sus datos, imagen, etc.
+];
 
-// ...Todo tu código de carrito y PayPal del carrito sigue igual...
-
-// Al final del archivo, después de renderizar los productos
-document.addEventListener('DOMContentLoaded', () => {
-  productos.forEach(p => {
-    if (window.paypal) {
-      paypal.Buttons({
-        style: { layout: 'vertical', color: 'gold', height: 35, label: 'pay' },
-        createOrder: function (data, actions) {
-          return actions.order.create({
-            purchase_units: [{
-              amount: { currency_code: 'EUR', value: p.precioSale.toFixed(2) },
-              custom_id: p.nombre // Campo oculto con el nombre del proveedor
-            }]
-          });
-        },
-        onApprove: async function (data, actions) {
-          const details = await actions.order.capture();
-          alert(`¡Gracias por tu compra a ${p.nombre}!`);
-          // Aquí puedes añadir lógica para enviar el contacto, email, etc.
-        },
-        onError: err => {
-          alert("Error al procesar el pago de este proveedor.");
-          console.error(err);
-        }
-      }).render(`#paypal-individual-${p.id}`);
-    }
+// Renderizar la lista de proveedores (en <main id="proveedores">)
+function renderProductos() {
+  const main = document.getElementById('proveedores');
+  main.innerHTML = ""; // Limpiar antes
+  productos.forEach(prod => {
+    const art = document.createElement('article');
+    art.className = 'proveedor-mini';
+    art.innerHTML = `
+      <img src="${prod.img}" alt="${prod.nombre}">
+      <h2>${prod.nombre}</h2>
+      <div class="precio">${prod.precioSale.toFixed(2)}€</div>
+      <button class="agregar" data-id="${prod.id}">Agregar al carrito</button>
+    `;
+    main.appendChild(art);
   });
+}
+renderProductos();
+
+// Modal para todos los proveedores
+function abrirModalProveedor(prod, cantidad = 1) {
+  const modal = document.getElementById('modalProveedor');
+  modal.innerHTML = `
+    <div class="modal-content">
+      <button class="cerrar-modal" id="cerrarModal">&times;</button>
+      <div class="modal-flex">
+        <div class="modal-img">
+          <img src="${prod.img}" alt="${prod.nombre}">
+        </div>
+        <div class="modal-info">
+          <h2>${prod.nombre}</h2>
+          <div>
+            <span class="estrellas">★★★★★</span> <span style="color:#888;">(+6700 Reseñas)</span>
+          </div>
+          <div>
+            <span class="precio-nueva">${prod.precioSale.toFixed(2)}€</span>
+            <span class="precio-original">${prod.precioOrig.toFixed(2)}€</span>
+            <span class="descuento">AHORRA ${Math.round(100-(prod.precioSale/prod.precioOrig*100))}%</span>
+          </div>
+          <div class="cantidad-box">
+            <button id="restarCantidad">-</button>
+            <span id="cantidadSpan">${cantidad}</span>
+            <button id="sumarCantidad">+</button>
+            <span class="mini">(Cantidad)</span>
+          </div>
+          <div class="info-instantaneo">⚡ Información enviada al instante.</div>
+          <div id="paypal-modal-btn"></div>
+          ${prod.testimonios && prod.testimonios.length > 0 ? `
+            <div class="testimonios">
+              <div class="testimonio">
+                <p>“${prod.testimonios[0].texto}”</p>
+                <span class="autor">${prod.testimonios[0].autor} ⭐⭐⭐⭐⭐</span>
+              </div>
+            </div>
+          ` : ""}
+        </div>
+      </div>
+    </div>
+  `;
+  modal.classList.remove('oculto');
+
+  // Cantidad
+  let cantidadActual = cantidad;
+  const span = modal.querySelector("#cantidadSpan");
+  modal.querySelector("#sumarCantidad").onclick = () => {
+    cantidadActual++;
+    span.textContent = cantidadActual;
+    renderPayPalBtn(prod, cantidadActual);
+  };
+  modal.querySelector("#restarCantidad").onclick = () => {
+    if (cantidadActual > 1) {
+      cantidadActual--;
+      span.textContent = cantidadActual;
+      renderPayPalBtn(prod, cantidadActual);
+    }
+  };
+
+  // Renderizar el botón de PayPal para ese proveedor y cantidad
+  renderPayPalBtn(prod, cantidadActual);
+
+  // Cerrar modal
+  modal.querySelector("#cerrarModal").onclick = () => {
+    modal.classList.add('oculto');
+    modal.innerHTML = "";
+  };
+}
+
+function renderPayPalBtn(prod, cantidad) {
+  const cont = document.getElementById('paypal-modal-btn');
+  cont.innerHTML = ""; // Limpia btn anterior si existe
+  if (window.paypal) {
+    paypal.Buttons({
+      style: { layout: 'vertical', color: 'gold' },
+      createOrder: function(data, actions) {
+        return actions.order.create({
+          purchase_units: [{
+            amount: { currency_code: 'EUR', value: (prod.precioSale * cantidad).toFixed(2) },
+            custom_id: `[${prod.nombre}] Cantidad:${cantidad}`
+          }]
+        });
+      },
+      onApprove: async function(data, actions) {
+        const details = await actions.order.capture();
+        alert(`¡Gracias por tu compra de ${prod.nombre}!`);
+        // Aquí puedes mostrar la info de contacto, enviar email, etc.
+      },
+      onError: err => {
+        alert("Error al procesar el pago con PayPal.");
+        console.error(err);
+      }
+    }).render('#paypal-modal-btn');
+  }
+}
+
+// Listener para abrir modal al hacer click en “Agregar”
+document.getElementById('proveedores').addEventListener('click', e => {
+  if (e.target.classList.contains('agregar')) {
+    const id = e.target.dataset.id;
+    const prod = productos.find(p => p.id === id);
+    if (prod) abrirModalProveedor(prod);
+  }
 });
