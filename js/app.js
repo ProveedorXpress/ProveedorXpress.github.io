@@ -21,7 +21,7 @@ const productos = [
   { id: 'PRUEBA', nombre: 'PRUEBA', img: 'assets/nada.jpg', precioOrig: 5, precioSale: 1 }
 ];
 
-// Renderizar productos (solo una vez, sin duplicar)
+// Renderizar productos
 function renderProductos() {
   const productosContainer = document.getElementById('productos');
   productosContainer.innerHTML = "";
@@ -43,7 +43,7 @@ function renderProductos() {
 }
 renderProductos();
 
-// Modal dinámico FICHA de proveedor
+// Modal ficha proveedor
 function abrirModalProveedor(prod, cantidad = 1) {
   const modal = document.getElementById('modalProveedor');
   modal.innerHTML = `
@@ -74,7 +74,7 @@ function abrirModalProveedor(prod, cantidad = 1) {
   `;
   modal.classList.remove('oculto');
 
-  // Lógica cantidad
+  // Cantidad lógica
   let cantidadActual = cantidad;
   const span = modal.querySelector("#cantidadSpan");
   modal.querySelector("#sumarCantidad").onclick = () => {
@@ -90,7 +90,7 @@ function abrirModalProveedor(prod, cantidad = 1) {
     }
   };
 
-  // Renderiza el botón PayPal de este proveedor y cantidad
+  // Render PayPal
   renderPayPalBtn(prod, cantidadActual);
 
   // Cerrar modal
@@ -126,7 +126,7 @@ function renderPayPalBtn(prod, cantidad) {
   }
 }
 
-// Listener: abrir modal ficha al hacer click en “Agregar al carrito”
+// Abrir modal ficha al hacer click en “Agregar al carrito”
 document.getElementById('productos').addEventListener('click', e => {
   if (e.target.classList.contains('agregar')) {
     const id = e.target.dataset.id;
