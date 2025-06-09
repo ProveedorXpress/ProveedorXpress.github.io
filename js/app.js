@@ -41,9 +41,9 @@ function renderProductos() {
     productosContainer.appendChild(art);
   });
 }
-renderProductos();
+document.addEventListener("DOMContentLoaded", renderProductos);
 
-// Modal ficha proveedor
+// MODAL ficha proveedor
 function abrirModalProveedor(prod, cantidad = 1) {
   const modal = document.getElementById('modalProveedor');
   modal.innerHTML = `
@@ -126,7 +126,7 @@ function renderPayPalBtn(prod, cantidad) {
   }
 }
 
-// Abrir modal ficha al hacer click en “Agregar al carrito”
+// Listener para botón "Agregar al carrito" (abre el modal)
 document.getElementById('productos').addEventListener('click', e => {
   if (e.target.classList.contains('agregar')) {
     const id = e.target.dataset.id;
