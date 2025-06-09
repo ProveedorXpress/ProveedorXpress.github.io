@@ -320,3 +320,94 @@ document.getElementById('proveedores').addEventListener('click', e => {
     if (prod) abrirModalProveedor(prod);
   }
 });
+// MODAL DINÁMICO para ficha individual de proveedor
+function abrirModalProveedor(prod, cantidad = 1) {
+  const modal = document.getElementById('modalProveedor');
+  modal.innerHTML = `
+    <div class="modal-content">
+      <button class="cerrar-modal" id="cerrarModal">&times;</button>
+      <div class="modal-flex">
+        <div class="modal-img">
+          <img src="${prod.img}" alt="${prod.nombre}">
+        </div>
+        <div class="modal-info">
+          <h2>${prod.nombre}</h2>
+          <div>
+            <span class="precio-nueva">${prod.precioSale.toFixed(2)}€</span>
+            <span class="precio-original">${prod.precioOrig.toFixed(2)}€</span>
+            <span class="descuento">AHORRA ${Math.round(100 - (prod.precioSale / prod.precioOrig) * 100)}%</span>
+          </div>
+          <div class="cantidad-box">
+            <button id="restarCantidad">-</button>
+            <span id="cantidadSpan">${cantidad}</span>
+            <button id="sumarCantidad">+</button>
+            <span class="mini">(Cantidad)</span>
+          </div>
+          <div class="info-instantaneo">⚡ Información enviada al instante.</div>
+          <div id="paypal-modal-btn"></div>
+        </div>
+      </div>
+    </div>
+  `;
+  modal.classList.remove('oculto');
+
+  // Lógica cantidad
+  let cantidadActual = cantidad;
+  const span = modal.querySelector("#cantidadSpan");
+  modal.querySelector("#sumarCantidad").onclick = () => {
+    cantidadActual++;
+    span.textContent = cantidadActual;
+    renderPayPalBtn(prod, cantidadActual);
+  };
+  modal.querySelector("#restarCantidad").onclick = () => {
+    if (cantidadActual > 1) {
+      cantidadActual--;
+      span.textContent = cantidadActual;
+      renderPayPalBtn(prod, cantidadActual);
+    }
+  };
+
+  // Renderiza el botón PayPal de este proveedor y cantidad
+  renderPayPalBtn(prod, cantidadActual);
+
+  // Cerrar modal
+  modal.querySelector("#cerrarModal").onclick = () => {
+    modal.classList.add('oculto');
+    modal.innerHTML = "";
+  };
+}
+
+function renderPayPalBtn(prod, cantidad) {
+  const cont = document.getElementById('paypal-modal-btn');
+  cont.innerHTML = "";
+  if (window.paypal) {
+    paypal.Buttons({
+      style: { layout: 'vertical', color: 'gold' },
+      createOrder: function(data, actions) {
+        return actions.order.create({
+          purchase_units: [{
+            amount: { currency_code: 'EUR', value: (prod.precioSale * cantidad).toFixed(2) },
+            custom_id: `[${prod.nombre}] Cantidad:${cantidad}`
+          }]
+        });
+      },
+      onApprove: async function(data, actions) {
+        alert(`¡Gracias por tu compra de ${prod.nombre}!`);
+        // Aquí puedes mostrar info de contacto, enviar email, etc.
+      },
+      onError: err => {
+        alert("Error al procesar el pago con PayPal.");
+        console.error(err);
+      }
+    }).render('#paypal-modal-btn');
+  }
+}
+
+// Listener para abrir modal al hacer click en “Agregar al carrito”
+document.getElementById('productos').addEventListener('click', e => {
+  if (e.target.classList.contains('agregar')) {
+    const id = e.target.dataset.id;
+    const prod = productos.find(p => p.id === id);
+    if (prod) abrirModalProveedor(prod);
+  }
+});
