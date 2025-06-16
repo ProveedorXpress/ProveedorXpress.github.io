@@ -4,6 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ProveedorXpress</title>
+  <link rel="stylesheet" href="./css/styles.css" />
+  <link rel="stylesheet" href="./css/modal.css" />
+  <link rel="stylesheet" href="./css/reviews.css" />
+  <link rel="stylesheet" href="./css/paypal.css" />
+  <link rel="stylesheet" href="./css/cookies.css" />
+  <link rel="stylesheet" href="./css/comparison.css" />
+  <link rel="stylesheet" href="./css/Animacion título.css" />
   <link rel="icon" href="./assets/a.png" type="image/png" />
   
   <style>
@@ -330,151 +337,6 @@
       cursor: pointer;
       font-size: 1em;
     }
-
-    /* Comparison section */
-    .comparison-section {
-      max-width: 1200px;
-      margin: 50px auto;
-      padding: 40px 20px;
-      background: white;
-      border-radius: 15px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-    }
-
-    .comparison-title {
-      text-align: center;
-      color: #333;
-      margin-bottom: 40px;
-      font-size: 2em;
-    }
-
-    .comparison-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 30px;
-    }
-
-    .comparison-column {
-      padding: 30px;
-      border-radius: 10px;
-    }
-
-    .nosotros {
-      background: linear-gradient(135deg, #27ae60, #2ecc71);
-      color: white;
-    }
-
-    .otros {
-      background: linear-gradient(135deg, #e74c3c, #c0392b);
-      color: white;
-    }
-
-    .comparison-column h3 {
-      text-align: center;
-      font-size: 1.5em;
-      margin-bottom: 25px;
-    }
-
-    .comparison-list {
-      list-style: none;
-      padding: 0;
-    }
-
-    .comparison-item {
-      display: flex;
-      align-items: center;
-      margin-bottom: 15px;
-      padding: 10px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 8px;
-    }
-
-    .comparison-item .icon {
-      font-size: 1.5em;
-      margin-right: 15px;
-    }
-
-    /* Reviews section */
-    .reviews-section {
-      max-width: 1200px;
-      margin: 50px auto;
-      padding: 40px 20px;
-    }
-
-    .reviews-title {
-      text-align: center;
-      color: #333;
-      margin-bottom: 40px;
-      font-size: 2em;
-    }
-
-    .reviews-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 25px;
-    }
-
-    .review-card {
-      background: white;
-      border-radius: 15px;
-      padding: 25px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-
-    .review-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-    }
-
-    .user-info {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .user-avatar {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: #3498db;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 1.2em;
-    }
-
-    .user-name {
-      margin: 0;
-      color: #333;
-      font-size: 1.1em;
-    }
-
-    .stars {
-      color: #f39c12;
-      margin-top: 5px;
-    }
-
-    .product-purchased img {
-      width: 60px;
-      height: 60px;
-      border-radius: 8px;
-      object-fit: cover;
-    }
-
-    .review-content p {
-      color: #555;
-      line-height: 1.6;
-      margin: 15px 0;
-    }
-
-    .review-date {
-      color: #999;
-      font-size: 0.9em;
-    }
     
     @media (max-width: 768px) {
       .modal-flex {
@@ -484,40 +346,29 @@
       #productos {
         grid-template-columns: 1fr;
       }
-
-      .comparison-container {
-        grid-template-columns: 1fr;
-      }
-
-      .reviews-container {
-        grid-template-columns: 1fr;
-      }
     }
   </style>
 </head>
 <body>
-
-  <!-- Modal de términos y condiciones -->
+  <!-- Modal de cookies/términos -->
   <div id="cookieOverlay" class="cookie-overlay">
     <div class="cookie-modal">
-      <h2>Términos y Condiciones de ProveedorXpress</h2>
-      <p>Por favor, lee y acepta nuestros términos para continuar:</p>
+      <h2>Términos y Condiciones de Servicio</h2>
+      
+      <p>Antes de continuar, es importante que leas y aceptes nuestros términos de servicio:</p>
       
       <ul class="terms-list">
-        <li>✅ Los datos de proveedores son <span class="highlight">100% reales y verificados</span></li>
-        <li>📧 La información se envía <span class="highlight">instantáneamente</span> a tu email</li>
-        <li>🔒 Tu información personal está <span class="highlight">completamente protegida</span></li>
-        <li>💰 Pago seguro procesado por <span class="highlight">PayPal</span></li>
-        <li>📋 Los proveedores incluyen: contactos, precios, condiciones y términos</li>
-        <li>🚫 <span class="highlight">No reembolsos</span> una vez enviada la información</li>
-        <li>⚖️ Al comprar, aceptas todos estos términos automáticamente</li>
+        <li><span class="highlight">No hay devoluciones:</span> Todos los productos digitales (información de contacto de proveedores) son finales una vez entregados.</li>
+        <li><span class="highlight">Servicio de intermediación:</span> ProveedorXpress actúa únicamente como intermediario en la entrega de información de contacto.</li>
+        <li><span class="highlight">Sin responsabilidad comercial:</span> No nos hacemos responsables de las transacciones o acuerdos entre tú y los proveedores.</li>
+        <li><span class="highlight">Información actualizada:</span> Hacemos nuestro mejor esfuerzo para mantener la información actualizada, pero no garantizamos su exactitud al 100%.</li>
+        <li><span class="highlight">Uso de cookies:</span> Utilizamos cookies técnicas necesarias para el funcionamiento del sitio web y el procesamiento de pagos.</li>
+        <li><span class="highlight">Datos personales:</span> Tus datos de contacto y pago se procesan de forma segura únicamente para completar tu pedido.</li>
       </ul>
       
       <div class="checkbox-container">
-        <label>
-          <input type="checkbox" id="acceptTerms"> 
-          He leído y acepto los términos y condiciones
-        </label>
+        <input type="checkbox" id="acceptTerms" />
+        <label for="acceptTerms">He leído y acepto los términos y condiciones</label>
       </div>
       
       <div class="cookie-buttons">
@@ -539,157 +390,6 @@
     <!-- Se inyectan los productos -->
   </main>
 
-  <!-- Sección de Comparación -->
-  <section class="comparison-section">
-    <h2 class="comparison-title">¿Por qué elegir ProveedorXpress?</h2>
-    <div class="comparison-container">
-      <div class="comparison-column nosotros">
-        <h3>ProveedorXpress ✅</h3>
-        <ul class="comparison-list">
-          <li class="comparison-item">
-            <span class="icon">⚡</span>
-            <span class="text">Información enviada <strong>instantáneamente</strong></span>
-          </li>
-          <li class="comparison-item">
-            <span class="icon">✅</span>
-            <span class="text">Proveedores <strong>verificados</strong> y confiables</span>
-          </li>
-          <li class="comparison-item">
-            <span class="icon">💰</span>
-            <span class="text">Precios <strong>competitivos</strong> garantizados</span>
-          </li>
-          <li class="comparison-item">
-            <span class="icon">🔒</span>
-            <span class="text">Pago <strong>100% seguro</strong> con PayPal</span>
-          </li>
-          <li class="comparison-item">
-            <span class="icon">📧</span>
-            <span class="text">Soporte <strong>24/7</strong> por email</span>
-          </li>
-          <li class="comparison-item">
-            <span class="icon">🎯</span>
-            <span class="text">Información <strong>específica</strong> por categoría</span>
-          </li>
-        </ul>
-      </div>
-      
-      <div class="comparison-column otros">
-        <h3>Otros servicios ❌</h3>
-        <ul class="comparison-list">
-          <li class="comparison-item">
-            <span class="icon">⏳</span>
-            <span class="text">Demoras de <strong>días o semanas</strong></span>
-          </li>
-          <li class="comparison-item">
-            <span class="icon">❓</span>
-            <span class="text">Proveedores <strong>sin verificar</strong></span>
-          </li>
-          <li class="comparison-item">
-            <span class="icon">💸</span>
-            <span class="text">Precios <strong>inflados</strong></span>
-          </li>
-          <li class="comparison-item">
-            <span class="icon">⚠️</span>
-            <span class="text">Métodos de pago <strong>inseguros</strong></span>
-          </li>
-          <li class="comparison-item">
-            <span class="icon">📞</span>
-            <span class="text">Soporte <strong>limitado</strong></span>
-          </li>
-          <li class="comparison-item">
-            <span class="icon">📋</span>
-            <span class="text">Información <strong>genérica</strong></span>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- Sección de Reseñas -->
-  <section class="reviews-section">
-    <h2 class="reviews-title">Lo que dicen nuestros clientes</h2>
-    
-    <div class="reviews-container">
-      <!-- Reseña 1 -->
-      <div class="review-card">
-        <div class="review-header">
-          <div class="user-info">
-            <div class="user-avatar">M</div>
-            <div class="user-details">
-              <h4 class="user-name">María González</h4>
-              <div class="stars">
-                <span class="star">⭐</span>
-                <span class="star">⭐</span>
-                <span class="star">⭐</span>
-                <span class="star">⭐</span>
-                <span class="star">⭐</span>
-              </div>
-            </div>
-          </div>
-          <div class="product-purchased">
-            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiByeD0iOCIgZmlsbD0iIzNBNEY3QSIvPgo8cGF0aCBkPSJNMTUgMjBIMzBWMzVIMTVWMjBaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMzUgMjBINDVWMzVIMzVWMjBaIiBmaWxsPSJ3aGl0ZSIvPgo8dGV4dCB4PSIzMCIgeT0iNDgiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSI4IiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+Um9wYTwvdGV4dD4KPC9zdmc+" alt="Proveedor de ropa" class="product-image">
-          </div>
-        </div>
-        <div class="review-content">
-          <p>"Increíble servicio! Los proveedores de ropa que me enviaron son exactamente lo que necesitaba para mi negocio. Calidad excepcional y precios competitivos. 100% recomendado!"</p>
-        </div>
-        <div class="review-date">Hace 2 días</div>
-      </div>
-
-      <!-- Reseña 2 -->
-      <div class="review-card">
-        <div class="review-header">
-          <div class="user-info">
-            <div class="user-avatar">A</div>
-            <div class="user-details">
-              <h4 class="user-name">Alejandro Ruiz</h4>
-              <div class="stars">
-                <span class="star">⭐</span>
-                <span class="star">⭐</span>
-                <span class="star">⭐</span>
-                <span class="star">⭐</span>
-                <span class="star">⭐</span>
-              </div>
-            </div>
-          </div>
-          <div class="product-purchased">
-            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiByeD0iOCIgZmlsbD0iIzJFOEI1NyIvPgo8Y2lyY2xlIGN4PSIzMCIgY3k9IjI1IiByPSI4IiBmaWxsPSJ3aGl0ZSIvPgo8cmVjdCB4PSIyNSIgeT0iMzUiIHdpZHRoPSIxMCIgaGVpZ2h0PSI4IiBmaWxsPSJ3aGl0ZSIvPgo8dGV4dCB4PSIzMCIgeT0iNTIiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSI3IiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RWxlY3Ryb248L3RleHQ+CjwvZz4KPC9zdmc+" alt="Proveedor electrónica" class="product-image">
-          </div>
-        </div>
-        <div class="review-content">
-          <p>"Fantástico! Me llegaron los contactos de proveedores de electrónica al instante. Ya he cerrado mi primer pedido con uno de ellos. El servicio es rápido y profesional."</p>
-        </div>
-        <div class="review-date">Hace 1 semana</div>
-      </div>
-
-      <!-- Reseña 3 -->
-      <div class="review-card">
-        <div class="review-header">
-          <div class="user-info">
-            <div class="user-avatar">L</div>
-            <div class="user-details">
-              <h4 class="user-name">Laura Martín</h4>
-              <div class="stars">
-                <span class="star">⭐</span>
-                <span class="star">⭐</span>
-                <span class="star">⭐</span>
-                <span class="star">⭐</span>
-                <span class="star">⭐</span>
-              </div>
-            </div>
-          </div>
-          <div class="product-purchased">
-            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiByeD0iOCIgZmlsbD0iI0Y1OUUwQiIvPgo8cmVjdCB4PSIxNSIgeT0iMTUiIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCIgcng9IjQiIGZpbGw9IndoaXRlIi8+Cjx0ZXh0IHg9IjMwIiB5PSIzMiIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEwIiBmaWxsPSIjRjU5RTBCIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5QQUNLPC90ZXh0Pgo8dGV4dCB4PSIzMCIgeT0iNTIiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSI3IiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+Q29tcGxldG88L3RleHQ+Cjwvc3ZnPg==" alt="Pack completo" class="product-image">
-          </div>
-        </div>
-        <div class="review-content">
-          <p>"Compré el pack completo y ha sido la mejor inversión para mi dropshipping. Tengo proveedores para todo tipo de productos. ¡Súper recomendado!"</p>
-        </div>
-        <div class="review-date">Hace 3 días</div>
-      </div>
-    </div>
-  </section>
-
   <!-- PayPal SDK -->
   <script src="https://www.paypal.com/sdk/js?client-id=AafE6Irt7GkUphXF4HsdjziTlFI4SvOy9P6_UKt60RoU77bvN2__PJ3q8A8l6QnecuTCZj95krzsC6zJ&currency=EUR"></script>
   
@@ -697,7 +397,6 @@
     // Array de productos
     const productos = [
       { id: 'ropa', nombre: 'Proveedor de ropa', img: 'assets/ropa.jpg', precioOrig: 19.99, precioSale: 9.99 },
-      { id: 'vapers', nombre: 'Proveedor vapers', img: 'assets/vapers.jpg'precioOrig: 19.99, precioSale: 9.99 },
       { id: 'vapers', nombre: 'Proveedor vapers', img: 'assets/vapers.jpg', precioOrig: 19.99, precioSale: 9.99 },
       { id: 'zapas', nombre: 'Proveedor zapas', img: 'assets/zapas.jpg', precioOrig: 19.99, precioSale: 9.99 },
       { id: 'vintage', nombre: 'Proveedor ropa vintage', img: 'assets/ropa_vintage.jpg', precioOrig: 19.99, precioSale: 9.99 },
@@ -716,7 +415,7 @@
       { id: 'JOYASCONDIAMANTEMOISSANITE', nombre: 'Proveedor JOYAS CON DIAMANTE (MOISSANITE)', img: 'assets/JOYASCONDIAMANTEMOISSANITE.jpg', precioOrig: 10, precioSale: 9.99 },
       { id: 'pack-completo', nombre: 'Pack completo de todos los proveedores', img: 'assets/pack.jpg', precioOrig: 99.99, precioSale: 50 },
       { id: 'pack-aleatorio', nombre: 'Pack aleatorio de varios proveedores', img: 'assets/PackRND.jpg', precioOrig: 39.99, precioSale: 19.99 },
-      
+
     ];
 
     // Variables globales
