@@ -19,7 +19,6 @@ const productos = [
   { id: 'pack-completo', nombre: 'Pack completo de todos los proveedores', img: 'assets/pack.jpg', precioOrig: 99.99, precioSale: 50 },
   { id: 'pack-aleatorio', nombre: 'Pack aleatorio de varios proveedores', img: 'assets/PackRND.jpg', precioOrig: 39.99, precioSale: 19.99 },
   { id: 'PRUEBA', nombre: 'PRUEBA', img: 'assets/nada.jpg', precioOrig: 5, precioSale: 1 }
-
 ];
 
 const productosContainer = document.getElementById('productos');
@@ -98,65 +97,67 @@ function renderCarrito() {
     });
   });
   totalSpan.textContent = `Total: ${total.toFixed(2)}€`;
-  renderPayPalButton(total);
+  renderPayButton(total);
 }
 
-// PayPal seguro
-function renderPayPalButton(total) {
-  document.getElementById('paypal-button-container')?.remove();
-  const container = document.createElement('div');
-  container.id = 'paypal-button-container';
-  container.style.marginTop = 'auto';
-  carrito.appendChild(container);
+// Botón de pagar que redirige a systeme.io
+function renderPayButton(total) {
+  // Remover botón anterior si existe
+  const existingButton = document.getElementById('pay-button');
+  if (existingButton) {
+    existingButton.remove();
+  }
 
-  paypal.Buttons({
-    style: { layout: 'vertical', color: 'gold' },
-    createOrder: function (data, actions) {
-      const idsProveedores = Object.keys(carritoItems).join(',');
-      return actions.order.create({
-        purchase_units: [{
-          amount: { currency_code: 'EUR', value: total.toFixed(2) },
-          custom_id: idsProveedores
-        }]
-      });
-    },
-    onApprove: async function (data, actions) {
-      try {
-        const details = await actions.order.capture();
-        const email = prompt("Ingresa tu email para recibir los contactos:");
+  // Solo mostrar botón si hay items en el carrito
+  if (Object.keys(carritoItems).length === 0) {
+    return;
+  }
 
-        if (email) {
-          const body = JSON.stringify({
-            custom_id: Object.keys(carritoItems).join(','),
-            payer_email: email
-          });
+  const payButton = document.createElement('button');
+  payButton.id = 'pay-button';
+  payButton.className = 'pay-button';
+  payButton.textContent = 'Pagar';
+  payButton.style.cssText = `
+    width: 100%;
+    padding: 15px;
+    background-color: #0070ba;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background-color 0.3s ease;
+  `;
 
-          const res = await fetch("https://TU_BACKEND_ON_RENDER/paypal-webhook", {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body
-          });
+  // Efecto hover
+  payButton.addEventListener('mouseenter', () => {
+    payButton.style.backgroundColor = '#005ea6';
+  });
+  
+  payButton.addEventListener('mouseleave', () => {
+    payButton.style.backgroundColor = '#0070ba';
+  });
 
-          if (res.ok) {
-            alert(`¡Gracias por tu compra! Los contactos se enviarán a ${email}.`);
-          } else {
-            alert("Error al enviar los contactos. Contacta con soporte.");
-          }
-        }
+  // Evento click para redirigir
+  payButton.addEventListener('click', () => {
+    // Guardar información del carrito en localStorage para posible uso futuro
+    localStorage.setItem('carritoItems', JSON.stringify(carritoItems));
+    localStorage.setItem('carritoTotal', total.toFixed(2));
+    
+    // Redirigir a la página de pago
+    window.location.href = 'https://proveedorxpress.systeme.io/';
+  });
 
-        carritoItems = {};
-        renderCarrito();
-        carrito.classList.remove('visible');
-      } catch (err) {
-        console.error("Error en pago:", err);
-        alert("Error al completar el pago.");
-      }
-    },
-    onError: err => {
-      console.error(err);
-      alert("Error al cargar el botón de PayPal.");
-    }
-  }).render('#paypal-button-container');
+  // Añadir el botón al carrito
+  const paypalContainer = document.querySelector('.paypal-container');
+  if (paypalContainer) {
+    paypalContainer.innerHTML = '';
+    paypalContainer.appendChild(payButton);
+  } else {
+    carrito.appendChild(payButton);
+  }
 }
 
 renderCarrito();
