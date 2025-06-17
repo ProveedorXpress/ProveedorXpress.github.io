@@ -1,35 +1,126 @@
-  
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ProveedorXpress</title>
-  <link rel="stylesheet" href="./css/styles.css" />
-  <link rel="stylesheet" href="./css/modal.css" />
-  <link rel="stylesheet" href="./css/reviews.css" />
-  <link rel="stylesheet" href="./css/paypal.css" />
-  <link rel="stylesheet" href="./css/comparison.css" />
-  <link rel="stylesheet" href="./css/Animacion título.css" />
-  <link rel="icon" href="./assets/a.png" type="image/png" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    h1, #subtitle {
+      text-align: center;
+      color: #333;
+    }
+    #subtitle {
+      color: #666;
+      margin-bottom: 30px;
+    }
+    #productos {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .producto {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .producto img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+    .producto h2 {
+      font-size: 1.2em;
+      margin: 10px 0;
+      color: #333;
+    }
+    .precio {
+      margin: 15px 0;
+    }
+    .tachado {
+      text-decoration: line-through;
+      color: #999;
+      margin-right: 10px;
+    }
+    .nuevo {
+      color: #e74c3c;
+      font-weight: bold;
+      font-size: 1.3em;
+    }
+    .agregar {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.3s;
+    }
+    .agregar:hover {
+      background: #2980b9;
+    }
+  </style>
 </head>
 <body>
   <h1>ProveedorXpress</h1>
   <p id="subtitle">Consigue los datos de contacto de los proveedores más confiables de tu sector. Servicio rápido y seguro.</p>
+  <main id="productos"></main>
 
-  <main id="productos">
-    <!-- Se inyectan los productos -->
-  </main>
+  <script>
+    const productos = [
+      { id: 'ropa', nombre: 'Proveedor de ropa', img: 'assets/ropa.jpg', precioOrig: 19.99, precioSale: 9.99 },
+      { id: 'vapers', nombre: 'Proveedor vapers', img: 'assets/vapers.jpg', precioOrig: 19.99, precioSale: 9.99 },
+      { id: 'zapas', nombre: 'Proveedor zapas', img: 'assets/zapas.jpg', precioOrig: 19.99, precioSale: 9.99 },
+      { id: 'vintage', nombre: 'Proveedor ropa vintage', img: 'assets/ropa_vintage.jpg', precioOrig: 19.99, precioSale: 9.99 },
+      { id: 'facturas', nombre: 'Proveedor facturas editables', img: 'assets/facturas.jpg', precioOrig: 19.99, precioSale: 9.99 },
+      { id: 'futbol', nombre: 'Proveedor fútbol', img: 'assets/futbol.jpg', precioOrig: 19.99, precioSale: 9.99 },
+      { id: 'relojes', nombre: 'Proveedor relojes', img: 'assets/relojes.jpg', precioOrig: 19.99, precioSale: 9.99 },
+      { id: 'accesorios', nombre: 'Proveedor accesorios', img: 'assets/accesorios.jpg', precioOrig: 19.99, precioSale: 9.99 },
+      { id: 'electronica', nombre: 'Proveedor electrónica', img: 'assets/electronica.jpg', precioOrig: 19.99, precioSale: 9.99 },
+      { id: 'tickets', nombre: 'Tickets', img: 'assets/tickets.jpg', precioOrig: 19.99, precioSale: 9.99 },
+      { id: 'perfumes', nombre: 'Proveedor perfumes', img: 'assets/perfumes.jpg', precioOrig: 19.99, precioSale: 9.99 },
+      { id: 'Iphones', nombre: 'Proveedor iPhone 15/16 Pro Max', img: 'assets/Iphones.jpg', precioOrig: 10, precioSale: 9.99 },
+      { id: 'Bolsos', nombre: 'Proveedor Bolsos LV', img: 'assets/bolsosLV.jpg', precioOrig: 20, precioSale: 13.99 },
+      { id: 'DenimTears', nombre: 'Proveedor Denim Tears:', img: 'assets/DenimTears.jpg', precioOrig: 10, precioSale: 9.99 },
+      { id: 'PulseraLV', nombre: 'Proveedor Pulsera LV', img: 'assets/PulseraLV.jpg', precioOrig: 10, precioSale: 9.99 },
+      { id: 'Sp5der', nombre: 'Proveedor Sp5der', img: 'assets/Sp5der.jpg', precioOrig: 10, precioSale: 9.99 },
+      { id: 'JOYASCONDIAMANTEMOISSANITE', nombre: 'Proveedor JOYAS CON DIAMANTE (MOISSANITE)', img: 'assets/JOYASCONDIAMANTEMOISSANITE.jpg', precioOrig: 10, precioSale: 9.99 },
+      { id: 'pack-completo', nombre: 'Pack completo de todos los proveedores', img: 'assets/pack.jpg', precioOrig: 99.99, precioSale: 50 },
+      { id: 'pack-aleatorio', nombre: 'Pack aleatorio de varios proveedores', img: 'assets/PackRND.jpg', precioOrig: 39.99, precioSale: 19.99 }
+    ];
 
-  <!-- Modal del producto -->
-  <div id="modalProveedor" class="modal-overlay">
-    <!-- Contenido se inyecta dinámicamente -->
-  </div>
+    function renderProductos() {
+      const container = document.getElementById('productos');
+      productos.forEach(p => {
+        const article = document.createElement('article');
+        article.className = 'producto';
+        article.innerHTML = `
+          <img src="${p.img}" alt="${p.nombre}">
+          <h2>${p.nombre}</h2>
+          <div class="precio">
+            <span class="tachado">${p.precioOrig.toFixed(2)}€</span>
+            <span class="nuevo">${p.precioSale.toFixed(2)}€</span>
+          </div>
+          <button class="agregar">Agregar al carrito</button>
+        `;
+        container.appendChild(article);
+      });
+    }
 
-  <!-- PayPal SDK -->
-  <script src="https://www.paypal.com/sdk/js?client-id=AafE6Irt7GkUphXF4HsdjziTlFI4SvOy9P6_UKt60RoU77bvN2__PJ3q8A8l6QnecuTCZj95krzsC6zJ&currency=EUR"></script>
-
-  <!-- El script JavaScript original que maneja los productos y pagos sigue igual, sin la parte de cookies -->
-  <!-- Por simplicidad, se asume que el usuario añadirá su propio script actualizado o desea que se le genere -->
+    document.addEventListener('DOMContentLoaded', renderProductos);
+  </script>
 </body>
 </html>
