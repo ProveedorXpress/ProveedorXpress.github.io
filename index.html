@@ -350,34 +350,6 @@
   </style>
 </head>
 <body>
-  <!-- Modal de cookies/términos -->
-  <div id="cookieOverlay" class="cookie-overlay">
-    <div class="cookie-modal">
-      <h2>Términos y Condiciones de Servicio</h2>
-      
-      <p>Antes de continuar, es importante que leas y aceptes nuestros términos de servicio:</p>
-      
-      <ul class="terms-list">
-        <li><span class="highlight">No hay devoluciones:</span> Todos los productos digitales (información de contacto de proveedores) son finales una vez entregados.</li>
-        <li><span class="highlight">Servicio de intermediación:</span> ProveedorXpress actúa únicamente como intermediario en la entrega de información de contacto.</li>
-        <li><span class="highlight">Sin responsabilidad comercial:</span> No nos hacemos responsables de las transacciones o acuerdos entre tú y los proveedores.</li>
-        <li><span class="highlight">Información actualizada:</span> Hacemos nuestro mejor esfuerzo para mantener la información actualizada, pero no garantizamos su exactitud al 100%.</li>
-        <li><span class="highlight">Uso de cookies:</span> Utilizamos cookies técnicas necesarias para el funcionamiento del sitio web y el procesamiento de pagos.</li>
-        <li><span class="highlight">Datos personales:</span> Tus datos de contacto y pago se procesan de forma segura únicamente para completar tu pedido.</li>
-      </ul>
-      
-      <div class="checkbox-container">
-        <input type="checkbox" id="acceptTerms" />
-        <label for="acceptTerms">He leído y acepto los términos y condiciones</label>
-      </div>
-      
-      <div class="cookie-buttons">
-        <button id="acceptBtn" class="btn-accept" disabled>Aceptar y Continuar</button>
-        <button id="declineBtn" class="btn-decline">Rechazar y Salir</button>
-      </div>
-    </div>
-  </div>
-
   <!-- Modal del producto -->
   <div id="modalProveedor" class="modal-overlay">
     <!-- Contenido se inyecta dinámicamente -->
@@ -473,7 +445,7 @@
                 <span class="mini">(Cantidad)</span>
               </div>
               
-              <div class="info-instantaneo">⚡ Información enviada al instante</div>
+              <div class="info-instantaneo">⚡ Información enviada, te va a llegar entre 0-24h</div>
               <div id="paypal-modal-btn"></div>
             </div>
           </div>
@@ -602,40 +574,6 @@
         modal.innerHTML = "";
       }, 300);
     }
-
-    // Event listeners principales
-    document.addEventListener('DOMContentLoaded', function() {
-      // Manejar términos y condiciones
-      const overlay = document.getElementById('cookieOverlay');
-      const checkbox = document.getElementById('acceptTerms');
-      const acceptBtn = document.getElementById('acceptBtn');
-      const declineBtn = document.getElementById('declineBtn');
-      
-      // Verificar si ya se aceptaron los términos
-      const termsAccepted = sessionStorage.getItem('termsAccepted') === 'true';
-      if (termsAccepted) {
-        overlay.style.display = 'none';
-      }
-      
-      // Checkbox handler
-      checkbox.addEventListener('change', function() {
-        acceptBtn.disabled = !checkbox.checked;
-      });
-      
-      // Botón aceptar
-      acceptBtn.addEventListener('click', function() {
-        if (checkbox.checked) {
-          sessionStorage.setItem('termsAccepted', 'true');
-          overlay.style.display = 'none';
-        }
-      });
-      
-      // Botón rechazar
-      declineBtn.addEventListener('click', function() {
-        if (confirm('¿Estás seguro de que quieres salir?')) {
-          window.location.href = 'https://www.google.com';
-        }
-      });
 
       // Renderizar productos
       renderProductos();
